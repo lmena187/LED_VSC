@@ -69,20 +69,68 @@ inline void hiloTCP(const std::string& ip, int puerto) {
 }
 
 inline void hiloTeclado() {
+    char teclaEsperando = ' ';
+
     while (true) {
         char tecla = getchar();
-        if (tecla == '\n' || tecla == '\r') continue;
-        if (tecla == '1' || tecla == '0' ||
-            tecla == 'A' || tecla == 'a') {
+
+        // Enter — ejecutar la orden en espera
+        if (tecla == '\n' || tecla == '\r') {
+            if (teclaEsperando == ' ') continue;
+
             int s = estado.socket.load();
-            if (s != -1) {
-                char cmd = (tecla == 'a') ? 'A' : tecla;
-                // Guardar ultima tecla y redibujar prompt
-                stats.ultimaTecla = cmd;
-                send(s, &cmd, 1, 0);
+            char cmd = teclaEsperando;
+            teclaEsperando = ' ';
+
+            if (cmd == 'M' || cmd == 'm') {
+                modoManualActivo = true;
+                stats.ultimaTecla = 'M';
                 std::lock_guard<std::mutex> lock(estado.mutexDibujo);
-                mostrarEstadisticasYPrompt();
+                construirYDibujar();
+
+            } else if (cmd == 'A' || cmd == 'a') {
+                modoManualActivo = false;
+                stats.ultimaTecla = 'A';
+                if (s != -1) {
+                    char c = 'A';
+                    send(s, &c, 1, 0);
+                }
+                std::lock_guard<std::mutex> lock(estado.mutexDibujo);
+                construirYDibujar();
+
+            } else if (cmd == '1' || cmd == '0') {
+                if (!modoManualActivo) {
+                    // Mostrar mensaje de error debajo del prompt
+                    int fila = cfg.filaInicio + H + 8;
+                    escribirEnPosicion(2, fila,
+                        "  ! TECLA NO VALIDA — ingresa M primero   ",
+                        Color::ROJO);
+                    std::cout.flush();
+                } else {
+                    if (s != -1) {
+                        stats.ultimaTecla = cmd;
+                        send(s, &cmd, 1, 0);
+                        std::lock_guard<std::mutex> lock(estado.mutexDibujo);
+                        mostrarEstadisticasYPrompt();
+                    }
+                }
             }
+            continue;
+        }
+
+        // Tecla valida — mostrar en prompt inmediatamente sin ejecutar
+        if (tecla == 'M' || tecla == 'm' ||
+            tecla == 'A' || tecla == 'a' ||
+            tecla == '1' || tecla == '0') {
+
+            // Limpiar mensaje de error anterior
+            int fila = cfg.filaInicio + H + 8;
+            limpiarPosicion(2, fila, 50);
+
+            teclaEsperando = tecla;
+            stats.ultimaTecla = tecla;
+            std::lock_guard<std::mutex> lock(estado.mutexDibujo);
+            mostrarEstadisticasYPrompt();
         }
     }
 }

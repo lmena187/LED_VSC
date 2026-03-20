@@ -1,6 +1,6 @@
 // ============================================================
 //  main.cpp — Arranque del programa
-//  Compilar: g++ -std=c++11 main.cpp -o buzzer -pthread
+//  Compilar: g++ -std=c++11 main.cpp -o led -pthread
 // ============================================================
 
 #include "red.h"
@@ -12,6 +12,7 @@ Config        cfg;
 Estado        estado;
 Pincel        pincel;
 Estadisticas  stats;
+bool          modoManualActivo = false;
 
 std::array<char, 4> canvas[H][W];
 int                 canvasColor[H][W];
@@ -26,13 +27,8 @@ int main() {
     std::cout << "\033[2J\033[H";
     std::cout.flush();
 
-    // Ocultar lo que escribe el usuario — evita que los numeros
-    // aparezcan en lugares incorrectos de la pantalla
-    system("stty -echo");
-
-    // EmojiTags fijos
-    //tags.push_back({5, 7, "❶", Color::BLANCO_ROTO, false, Color::NEGRO});
-    //tags.push_back({4, 8, "OFF", Color::BLANCO_ROTO, false, Color::BLANCO});
+    // Ocultar lo que escribe el usuario y enviar cada tecla inmediatamente
+    system("stty -echo -icanon min 1");
 
     // Hilo TCP
     std::string winIP = obtenerIPPuente();
@@ -49,7 +45,6 @@ int main() {
 
     while (true) { sleep(1); }
 
-    // Restaurar echo al salir (por si acaso)
-    system("stty echo");
+    system("stty echo icanon");
     return 0;
 }

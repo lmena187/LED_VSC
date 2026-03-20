@@ -19,8 +19,9 @@ namespace Color {
     const int BLANCO_INTENSO = 255;
     const int BLANCO_ROTO    = 253;
     const int GRIS_CLARO     = 250;
-     const int AMARILLO       = 226;  // amarillo brillante
-    const int AMARILLO_ROTO  = 220;  // amarillo mas calido
+    const int AMARILLO       = 226;
+    const int AMARILLO_ROTO  = 220;
+    const int ROJO = 196;
 }
 
 struct TamanoTerminal { int columnas; int filas; };
@@ -86,3 +87,5 @@ extern int                 canvasColor[H][W];
 
 extern std::vector<EmojiTag> tags;
 extern std::vector<EmojiTag> tagsDinamicos;
+
+extern bool modoManualActivo;

@@ -46,14 +46,11 @@ inline void actualizarTagsDinamicos() {
         limpiarPosicion(14, 8, 20);
         tagsDinamicos.push_back({18, 7, "❶",  Color::BLANCO_ROTO});
         tagsDinamicos.push_back({17, 8, "OFF", Color::BLANCO_ROTO});
-    
     }
 }
 
 // ============================================================
 //  MOSTRAR ESTADISTICAS Y PROMPT
-//  Se dibuja debajo del canvas en posicion fija.
-//  La ultima tecla se muestra junto al prompt.
 // ============================================================
 inline void mostrarEstadisticasYPrompt() {
     int tiempoMostrar = stats.segundosEncendido;
@@ -74,18 +71,32 @@ inline void mostrarEstadisticasYPrompt() {
     escribirEnPosicion(2, fila + 3,
         "  --------------------------------   ",
         Color::BLANCO_ROTO);
-    escribirEnPosicion(2, fila + 4,
-        "  Teclas: 1=ON  0=OFF  A=AUTO        ",
-        Color::BLANCO_ROTO);
+
+    // Modo actual y teclas disponibles
+    if (modoManualActivo) {
+        escribirEnPosicion(2, fila + 4,
+            "  Modo: MANUAL                       ",
+            Color::AMARILLO, true);
+        escribirEnPosicion(2, fila + 5,
+            "  Teclas: 1=ON  0=OFF  A=Auto        ",
+            Color::BLANCO_ROTO);
+    } else {
+        escribirEnPosicion(2, fila + 4,
+            "  Modo: AUTOMATICO                   ",
+            Color::GRIS_CLARO, true);
+        escribirEnPosicion(2, fila + 5,
+            "  Teclas: M=Manual  A=Auto           ",
+            Color::BLANCO_ROTO);
+    }
 
     // Prompt con ultima tecla presionada
     std::string teclaStr = (stats.ultimaTecla == ' ') ? " " : std::string(1, stats.ultimaTecla);
-    escribirEnPosicion(2, fila + 5,
+    escribirEnPosicion(2, fila + 6,
         "  > [" + teclaStr + "]                    ",
         Color::BLANCO_INTENSO);
 
     // Cursor al final del prompt
-    std::cout << "\033[" << (fila + 5) << ";8H";
+    std::cout << "\033[" << (fila + 6) << ";8H";
     std::cout.flush();
 }
 
