@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="80mm"
+   height="52mm"
+   viewBox="0 0 80 52"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="CONSOLA_CANVAS.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000001"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#000000"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="2.4945156"
+     inkscape:cx="152.53462"
+     inkscape:cy="121.86735"
+     inkscape:window-width="1920"
+     inkscape:window-height="1171"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer6">
+    <inkscape:grid
+       id="grid1"
+       units="mm"
+       originx="0"
+       originy="0"
+       spacingx="0.99999999"
+       spacingy="0.99999999"
+       empcolor="#838582"
+       empopacity="0.4"
+       color="#b8beb7"
+       opacity="0.30196078"
+       empspacing="4"
+       enabled="true"
+       visible="true" />
+    <inkscape:page
+       x="0"
+       y="0"
+       width="80"
+       height="52"
+       id="page1"
+       margin="0"
+       bleed="0"
+       inkscape:label="CANVAS" />
+    <inkscape:page
+       x="-22"
+       y="-4"
+       width="125"
+       height="74"
+       id="page2"
+       margin="0"
+       bleed="0"
+       inkscape:label="CONSOLA" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="DORMITORIO"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="display:inline;fill:#ecd200;fill-opacity:1;stroke:#a8d405;stroke-width:0;stroke-dasharray:none;stroke-opacity:0.731935;paint-order:markers stroke fill;opacity:1"
+       d="M 8,12 V 0"
+       id="path7"
+       sodipodi:insensitive="true" />
+    <path
+       style="display:inline;fill:#ecd200;fill-opacity:1;stroke:#a8d405;stroke-width:0;stroke-dasharray:none;stroke-opacity:0.731935;paint-order:markers stroke fill"
+       d="M 24.000001,12 H 8"
+       id="path6"
+       sodipodi:insensitive="true" />
+    <path
+       style="fill:#ecd200;fill-opacity:1;stroke:#a8d405;stroke-width:0;stroke-dasharray:none;stroke-opacity:0.731935;paint-order:markers stroke fill"
+       d="M 24.000001,0 V 12"
+       id="path5"
+       sodipodi:insensitive="true" />
+    <path
+       style="fill:#ecd200;fill-opacity:1;stroke:#a8d405;stroke-width:0;stroke-dasharray:none;stroke-opacity:0.731935;paint-order:markers stroke fill"
+       d="M 8,0 H 24.000001"
+       id="rect2"
+       sodipodi:insensitive="true" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="CERRAMIENTO">
+    <path
+       id="rect7"
+       style="fill:#ecd200;stroke:#a8d405;stroke-width:0.101044;stroke-opacity:0.731935;paint-order:markers stroke fill"
+       d="M 0.05052184,0.05052184 H 49.949478 V 39.949478 H 0.05052184 Z" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="TEXTOS">
+    <text
+       xml:space="preserve"
+       style="font-size:1.48009px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ecd200;stroke:#a8d405;stroke-width:0.0839105;stroke-opacity:0.731935;paint-order:markers stroke fill"
+       x="24.597437"
+       y="-2.3703568"
+       id="text1"
+       transform="scale(1.1927144,0.83842368)"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:1.48009px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.0839105"
+         x="24.597437"
+         y="-2.3703568">CONTROL ENERGETICO</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer6"
+     inkscape:label="MENU">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:1.74606px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ecd200;stroke:#a8d405;stroke-width:0.0989892;stroke-opacity:0.731935;paint-order:markers stroke fill"
+       x="-22.008247"
+       y="56.373459"
+       id="text2"
+       transform="scale(1.010245,0.9898589)"><tspan
+         sodipodi:role="line"
+         id="tspan2"
+         style="stroke-width:0.0989892"
+         x="-22.008247"
+         y="56.373459">   Veces encendido : 0</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.0989892"
+         x="-22.008247"
+         y="58.556034"
+         id="tspan3">   Tiempo ON       : 00:00:00</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.0989892"
+         x="-22.008247"
+         y="60.738609"
+         id="tspan4">   Ultimo evento   : ---</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.0989892"
+         x="-22.008247"
+         y="62.921185"
+         id="tspan5">   --------------------------------</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.0989892"
+         x="-22.008247"
+         y="65.10376"
+         id="tspan6">   Modo: MANUAL</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.0989892"
+         x="-22.008247"
+         y="67.286339"
+         id="tspan7">   Teclas: 1=ON  0=OFF  A=Auto</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.0989892"
+         x="-22.008247"
+         y="69.46891"
+         id="tspan8">   &gt; [M]</tspan></text>
+  </g>
+</svg>
