@@ -9,7 +9,7 @@
 #include <string>
 #include <array>
 
-const int W = 40;
+const int W = 80; // 80 el mismo valor que trabajo en inkscape
 const int H = 26;
 
 namespace Color {
@@ -22,6 +22,7 @@ namespace Color {
     const int AMARILLO       = 226;
     const int AMARILLO_ROTO  = 220;
     const int ROJO = 196;
+    const int VERDE_MATRIX   = 46;  
 }
 
 struct TamanoTerminal { int columnas; int filas; };
@@ -48,9 +49,9 @@ struct EmojiTag {
 
 struct Config {
     bool usarColores       = true;
-    bool mostrarPuntos     = false;
-    int  colInicio         = 2;
-    int  filaInicio        = 3;
+    bool mostrarPuntos     = true;
+    int  colInicio         = 23;  // 23 para centrado preciso
+    int  filaInicio        = 4;
 };
 
 struct Estado {

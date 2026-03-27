@@ -35,7 +35,7 @@ inline std::string ansiReset() {
 inline void clearCanvas() {
     for (int y = 0; y < H; y++)
         for (int x = 0; x < W; x++) {
-            canvas[y][x][0] = '.'; canvas[y][x][1] = '\0';
+            canvas[y][x][0] = ' '; canvas[y][x][1] = '\0';
             canvas[y][x][2] = '\0'; canvas[y][x][3] = '\0';
             canvasColor[y][x] = Color::RESET;
         }
@@ -65,7 +65,11 @@ inline void line(int x1, int y1, int x2, int y2) {
 inline std::vector<Punto> parseSVG(const std::string& d) {
     std::vector<Punto> vertices;
     std::string n = d;
-    for (size_t i = 0; i < n.length(); i++) if (n[i]==',') n[i]=' ';
+    // Acepta formato Inkscape multilinea y formato de una sola linea
+    for (size_t i = 0; i < n.length(); i++) {
+        if (n[i]=='\n' || n[i]=='\r' || n[i]=='\t') n[i]=' ';
+        if (n[i]==',') n[i]=' ';
+    }
     std::istringstream ss(n);
     int curX=0, curY=0; char cmd=' '; bool primerMov=true, relativo=false;
     std::string token;
@@ -76,8 +80,12 @@ inline std::vector<Punto> parseSVG(const std::string& d) {
             if (cmd=='H'||cmd=='h'||cmd=='V'||cmd=='v') {
                 double v; if (ss>>v) {
                     int vi=(int)round(v);
-                    if (cmd=='H') curX=vi; else if (cmd=='h') curX+=vi;
-                    else if (cmd=='V') curY=vi; else curY+=vi;
+                    if      (cmd=='H') curX=vi;
+                    else if (cmd=='h') curX+=vi;
+                    // Correccion de aspecto: V se divide a la mitad
+                    // porque las celdas de la terminal son el doble de altas que anchas
+                    else if (cmd=='V') curY=(int)round(v/2.0);
+                    else               curY+=(int)round(v/2.0);
                     vertices.push_back({curX,curY});
                 } continue;
             }
@@ -148,9 +156,9 @@ inline void imprimirCanvas() {
         for (int x = 0; x < W; x++) {
             const char* c = canvas[y][x].data();
             int col = canvasColor[y][x];
-            if (c[0]!='.')      std::cout << ansi(col) << c << ansiReset();
+            if (col!=Color::RESET) std::cout << ansi(col) << c << ansiReset();
             else if (cfg.mostrarPuntos) std::cout << ansi(Color::GRIS_CLARO) << '.' << ansiReset();
-            else                std::cout << ' ';
+            else                        std::cout << ' ';
         }
         std::cout << ansiReset();
     }
