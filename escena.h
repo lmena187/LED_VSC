@@ -24,86 +24,68 @@ inline void construirFiguras() {
 
 // Lado superior (horizontal, sin extremos)
 Figura ladoSuperior;
-ladoSuperior.path   = "M 9,0 H 23";
+ladoSuperior.path   = R"(M 8,0
+H 24.000001)";
 ladoSuperior.color  = Color::VERDE_MATRIX;
-ladoSuperior.trazo  = "─";
+ladoSuperior.trazo  = "*";
 ladoSuperior.grosor = 1;
+ladoSuperior.ladoIndependiente  = true;
 figuras.push_back(ladoSuperior);
 
 // Lado inferior (horizontal, sin extremos)
 Figura ladoInferior;
-ladoInferior.path   = "M 23,6 H 9";
+ladoInferior.path   = R"(M 24.000001,12
+H 8)";
 ladoInferior.color  = Color::VERDE_MATRIX;
-ladoInferior.trazo  = "─";
+ladoInferior.trazo  = "*";
 ladoInferior.grosor = 1;
+ladoInferior.ladoIndependiente = true;
 figuras.push_back(ladoInferior);
 
 // Lado izquierdo (vertical, sin extremos)
 Figura ladoIzquierdo;
-ladoIzquierdo.path   = "M 8,5 V 1";
+ladoIzquierdo.path   = R"(M 8,12
+V 0)";
 ladoIzquierdo.color  = Color::VERDE_MATRIX;
-ladoIzquierdo.trazo  = "│";
+ladoIzquierdo.trazo  = "*";
 ladoIzquierdo.grosor = 1;
+ladoIzquierdo.ladoIndependiente = true;
 figuras.push_back(ladoIzquierdo);
 
 // Lado derecho (vertical, sin extremos)
 Figura ladoDerecho;
-ladoDerecho.path   = "M 24,1 V 10";
+ladoDerecho.path   = R"(M 24.000001,0
+V 12)";
 ladoDerecho.color  = Color::VERDE_MATRIX;
-ladoDerecho.trazo  = "│";
+ladoDerecho.trazo  = "*";
 ladoDerecho.grosor = 1;
+ladoDerecho.ladoIndependiente = true;
 figuras.push_back(ladoDerecho);
 
 
 // ============================================================
-//  CERRAMIENTO DE LA CASA (estructura principal)
-//  Cuadrado que delimita el perímetro de la casa
-// ============================================================
-// ============================================================
-//  FORMATO MODERNO DEL PATH,  raw string literal (R"(...)"), En formato multilínea
+//  DORMITORIO sin separar extremos, estilo mas solido, sin caracteres de esquina
 // ============================================================
 
-// Lado superior (horizontal) - CERRAMIENTO
-Figura cerramientoSuperior;
-cerramientoSuperior.path = R"(M 0,0
-                              H 50)";
-cerramientoSuperior.color  = Color::VERDE_MATRIX;
-cerramientoSuperior.trazo  = "█";
-cerramientoSuperior.grosor = 1;
-figuras.push_back(cerramientoSuperior);
+/*Figura cuartoSolido;
+cuartoSolido.path   = R"(M 8.03545,0.03545061
+H 23.964549
+V 11.96455
+H 8.03545
+Z)";
+cuartoSolido.color  = Color::ROJO;
+cuartoSolido.trazo  = "*";
+cuartoSolido.grosor = 1;
+figuras.push_back(cuartoSolido);*/
 
-// Lado inferior (horizontal) - CERRAMIENTO
-Figura cerramientoInferior;
-cerramientoInferior.path = R"(M 36,20
-                              H 1)";
-cerramientoInferior.color  = Color::VERDE_MATRIX;
-cerramientoInferior.trazo  = "█";
-cerramientoInferior.grosor = 1;
-figuras.push_back(cerramientoInferior);
 
-// Lado izquierdo (vertical) - CERRAMIENTO
-Figura cerramientoIzquierdo;
-cerramientoIzquierdo.path = R"(M 0,20
-                              V 1)";
-cerramientoIzquierdo.color  = Color::VERDE_MATRIX;
-cerramientoIzquierdo.trazo  = "█";
-cerramientoIzquierdo.grosor = 1;
-figuras.push_back(cerramientoIzquierdo);
-
-// Lado derecho (vertical) - CERRAMIENTO
-Figura cerramientoDerecho;
-cerramientoDerecho.path = R"(M 50,1
-                              V 38)";
-cerramientoDerecho.color  = Color::VERDE_MATRIX;
-cerramientoDerecho.trazo  = "█";
-cerramientoDerecho.grosor = 1;
-figuras.push_back(cerramientoDerecho);
 
   for (size_t i = 0; i < figuras.size(); i++) {
         pincel.color  = figuras[i].color;
         pincel.trazo  = figuras[i].trazo;
         pincel.grosor = figuras[i].grosor;
-        std::vector<Punto> verts = parseSVG(figuras[i].path);
+        //std::vector<Punto> verts = parseSVG(figuras[i].path);
+        std::vector<Punto> verts = parseSVG(figuras[i].path, figuras[i].ladoIndependiente);
         for (size_t j = 0; j+1 < verts.size(); j++)
             line(verts[j].x, verts[j].y, verts[j+1].x, verts[j+1].y);
     }
@@ -195,11 +177,11 @@ inline void construirYDibujar() {
 // ============================================================
 //  ESQUINAS DEL RECTANGULO SEPARADO
 // ============================================================
-    pincel.color = Color::VERDE_MATRIX;
+    /*pincel.color = Color::VERDE_MATRIX;
     setPixel(8, 0, "█");
     setPixel(24, 0, "█");
     setPixel(24, 6, "┘");
-    setPixel(8, 6, "└");
+    setPixel(8, 6, "└");*/
 
     actualizarTagsDinamicos();
     imprimirCanvas();

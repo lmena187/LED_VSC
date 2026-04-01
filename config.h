@@ -33,6 +33,7 @@ struct Figura {
     int          color;
     const char*  trazo;
     int          grosor;
+    bool         ladoIndependiente = false;
 };
 
 struct EmojiTag {
