@@ -19,64 +19,165 @@ inline void construirFiguras() {
 //  Estilo wireframe técnico con caracteres de esquina
 // Las esquinas se dibujan por separado "└"
 // ============================================================
-//  FORMATO ANTIGUO DEL PATH, string normal en una línea,
-// ============================================================
-
-// Lado superior (horizontal, sin extremos)
-Figura ladoSuperior;
-ladoSuperior.path   = R"(M 8,0
-H 24.000001)";
-ladoSuperior.color  = Color::VERDE_MATRIX;
-ladoSuperior.trazo  = "*";
-ladoSuperior.grosor = 1;
-ladoSuperior.ladoIndependiente  = true;
-figuras.push_back(ladoSuperior);
-
-// Lado inferior (horizontal, sin extremos)
-Figura ladoInferior;
-ladoInferior.path   = R"(M 24.000001,12
-H 8)";
-ladoInferior.color  = Color::VERDE_MATRIX;
-ladoInferior.trazo  = "*";
-ladoInferior.grosor = 1;
-ladoInferior.ladoIndependiente = true;
-figuras.push_back(ladoInferior);
-
-// Lado izquierdo (vertical, sin extremos)
-Figura ladoIzquierdo;
-ladoIzquierdo.path   = R"(M 8,12
-V 0)";
-ladoIzquierdo.color  = Color::VERDE_MATRIX;
-ladoIzquierdo.trazo  = "*";
-ladoIzquierdo.grosor = 1;
-ladoIzquierdo.ladoIndependiente = true;
-figuras.push_back(ladoIzquierdo);
-
-// Lado derecho (vertical, sin extremos)
-Figura ladoDerecho;
-ladoDerecho.path   = R"(M 24.000001,0
-V 12)";
-ladoDerecho.color  = Color::VERDE_MATRIX;
-ladoDerecho.trazo  = "*";
-ladoDerecho.grosor = 1;
-ladoDerecho.ladoIndependiente = true;
-figuras.push_back(ladoDerecho);
-
 
 // ============================================================
-//  DORMITORIO sin separar extremos, estilo mas solido, sin caracteres de esquina
+//  VEREDA (2 lados independientes)
 // ============================================================
 
-/*Figura cuartoSolido;
-cuartoSolido.path   = R"(M 8.03545,0.03545061
-H 23.964549
-V 11.96455
-H 8.03545
-Z)";
-cuartoSolido.color  = Color::ROJO;
-cuartoSolido.trazo  = "*";
-cuartoSolido.grosor = 1;
-figuras.push_back(cuartoSolido);*/
+// Vereda frente (horizontal)
+Figura veredaFrente;
+veredaFrente.path   = "M 13,46 H 73";
+veredaFrente.color  = Color::VERDE_MATRIX;
+veredaFrente.trazo  = "─";
+veredaFrente.grosor = 1;
+veredaFrente.ladoIndependiente = true;
+figuras.push_back(veredaFrente);
+
+// Vereda lateral (vertical)
+Figura veredaLateral;
+veredaLateral.path   = "M 12,0 V 44";
+veredaLateral.color  = Color::VERDE_MATRIX;
+veredaLateral.trazo  = "│";
+veredaLateral.grosor = 1;
+veredaLateral.ladoIndependiente = true;
+figuras.push_back(veredaLateral);
+
+// ============================================================
+//  CERRAMIENTO DE LA CASA (4 lados independientes)
+// ============================================================
+
+// Lado trasero (horizontal)
+Figura cerramientoTrasero;
+cerramientoTrasero.path   = "M 20,0 H 69";
+cerramientoTrasero.color  = Color::VERDE_MATRIX;
+cerramientoTrasero.trazo  = "─";
+cerramientoTrasero.grosor = 1;
+cerramientoTrasero.ladoIndependiente = true;
+figuras.push_back(cerramientoTrasero);
+
+// Lado frontal (horizontal)
+Figura cerramientoFrontal;
+cerramientoFrontal.path   = "M 60,39 H 21";
+cerramientoFrontal.color  = Color::VERDE_MATRIX;
+cerramientoFrontal.trazo  = "─";
+cerramientoFrontal.grosor = 1;
+cerramientoFrontal.ladoIndependiente = true;
+figuras.push_back(cerramientoFrontal);
+
+// Lado derecho (vertical)
+Figura cerramientoDerecho;
+cerramientoDerecho.path   = "M 70,1 V 38";
+cerramientoDerecho.color  = Color::VERDE_MATRIX;
+cerramientoDerecho.trazo  = "│";
+cerramientoDerecho.grosor = 1;
+cerramientoDerecho.ladoIndependiente = true;
+figuras.push_back(cerramientoDerecho);
+
+// Lado izquierdo (vertical)
+Figura cerramientoIzquierdo;
+cerramientoIzquierdo.path   = "M 20,38 V 1";
+cerramientoIzquierdo.color  = Color::VERDE_MATRIX;
+cerramientoIzquierdo.trazo  = "│";
+cerramientoIzquierdo.grosor = 1;
+cerramientoIzquierdo.ladoIndependiente = true;
+figuras.push_back(cerramientoIzquierdo);
+// ============================================================
+//  DORMITORIO (5 lados independientes)
+// ============================================================
+
+// Lado trasero (horizontal)
+Figura dormitorioTrasero;
+dormitorioTrasero.path   = R"(M 28,0
+                               H 44)";
+dormitorioTrasero.color  = Color::VERDE_MATRIX;
+dormitorioTrasero.trazo  = "─";
+dormitorioTrasero.grosor = 1;
+dormitorioTrasero.ladoIndependiente = true;
+figuras.push_back(dormitorioTrasero);
+
+// Lado frontal izquierdo (horizontal, relativo)
+Figura dormitorioFrontalIzquierdo;
+dormitorioFrontalIzquierdo.path   = R"(m 32,12
+                                        h -3)";
+dormitorioFrontalIzquierdo.color  = Color::VERDE_MATRIX;
+dormitorioFrontalIzquierdo.trazo  = "─";
+dormitorioFrontalIzquierdo.grosor = 1;
+dormitorioFrontalIzquierdo.ladoIndependiente = true;
+figuras.push_back(dormitorioFrontalIzquierdo);
+
+// Lado frontal derecho (horizontal)
+Figura dormitorioFrontalDerecho;
+dormitorioFrontalDerecho.path   = R"(M 37,12
+                                      H 42)";
+dormitorioFrontalDerecho.color  = Color::VERDE_MATRIX;
+dormitorioFrontalDerecho.trazo  = "─";
+dormitorioFrontalDerecho.grosor = 1;
+dormitorioFrontalDerecho.ladoIndependiente = true;
+figuras.push_back(dormitorioFrontalDerecho);
+
+// Lado derecho (vertical)
+Figura dormitorioDerecho;
+dormitorioDerecho.path   = R"(M 42,1
+                               V 10)";
+dormitorioDerecho.color  = Color::VERDE_MATRIX;
+dormitorioDerecho.trazo  = "│";
+dormitorioDerecho.grosor = 1;
+dormitorioDerecho.ladoIndependiente = true;
+figuras.push_back(dormitorioDerecho);
+
+// Lado izquierdo (vertical)
+Figura dormitorioIzquierdo;
+dormitorioIzquierdo.path   = R"(M 28,10
+                                 V 1)";
+dormitorioIzquierdo.color  = Color::VERDE_MATRIX;
+dormitorioIzquierdo.trazo  = "│";
+dormitorioIzquierdo.grosor = 1;
+dormitorioIzquierdo.ladoIndependiente = true;
+figuras.push_back(dormitorioIzquierdo);
+
+// ============================================================
+//  PORTON / PUERTA DE GARAJE (4 lados independientes)
+// ============================================================
+
+pincel.color = Color::ROJO;
+setPixel(70, 19, "┐");  // superior derecha
+
+
+// Lado superior
+Figura portonSuperior;
+portonSuperior.path   = "M 61,38 H 69";
+portonSuperior.color  = Color::VERDE_MATRIX;
+portonSuperior.trazo  = "─";
+portonSuperior.grosor = 1;
+portonSuperior.ladoIndependiente = true;
+figuras.push_back(portonSuperior);
+
+// Lado inferior
+Figura portonInferior;
+portonInferior.path   = "M 69,42 H 61";
+portonInferior.color  = Color::VERDE_MATRIX;
+portonInferior.trazo  = "─";
+portonInferior.grosor = 1;
+portonInferior.ladoIndependiente = true;
+figuras.push_back(portonInferior);
+
+// Lado izquierdo
+Figura portonIzquierdo;
+portonIzquierdo.path   = "M 60,40 V 40";
+portonIzquierdo.color  = Color::VERDE_MATRIX;
+portonIzquierdo.trazo  = "│";
+portonIzquierdo.grosor = 1;
+portonIzquierdo.ladoIndependiente = true;
+figuras.push_back(portonIzquierdo);
+
+// Lado derecho
+Figura portonDerecho;
+portonDerecho.path   = "m 70,40 v 0";
+portonDerecho.color  = Color::VERDE_MATRIX;
+portonDerecho.trazo  = "│";
+portonDerecho.grosor = 1;
+portonDerecho.ladoIndependiente = true;
+figuras.push_back(portonDerecho);
 
 
 
@@ -98,12 +199,12 @@ inline void actualizarTagsDinamicos() {
     tagsDinamicos.clear();
     if (estado.led.load() == 1) {
         limpiarPosicion(14, 8, 20);
-        tagsDinamicos.push_back({38, 7, "❶", Color::AMARILLO});
-        tagsDinamicos.push_back({38, 8, "ON",  Color::AMARILLO});
+        tagsDinamicos.push_back({57, 7, "❶", Color::AMARILLO});
+        tagsDinamicos.push_back({57, 8, "ON",  Color::AMARILLO});
     } else {
         limpiarPosicion(14, 8, 20);
-        tagsDinamicos.push_back({38, 7, "❶",  Color::BLANCO_ROTO});
-        tagsDinamicos.push_back({38, 8, "OFF", Color::BLANCO_ROTO});
+        tagsDinamicos.push_back({57, 7, "❶",  Color::BLANCO_ROTO});
+        tagsDinamicos.push_back({57, 8, "OFF", Color::BLANCO_ROTO});
     }
 }
 
@@ -170,24 +271,86 @@ inline void construirYDibujar() {
 // ============================================================
 
     pincel.color = Color::VERDE_MATRIX;
-    setPixel(1, 15, ".");
-    escribirTexto(1,         25, ".", Color::BLANCO);
-    escribirTextoVertical(1, 10, ".", Color::BLANCO);
+    
+    escribirTexto(33,         25, "CALLE SARAJEVO", Color::VERDE_MATRIX);
+     setPixel(12, 25, "━");
+      setPixel(13, 25, "━");
+      setPixel(16, 25, "━");
+      setPixel(17, 25, "━");
+      setPixel(20, 25, "━");
+      setPixel(21, 25, "━");
+        setPixel(24, 25, "━");
+      setPixel(25, 25, "━");
+setPixel(28, 25, "━");
+      setPixel(29, 25, "━");
+
+      setPixel(50, 25, "━");
+      setPixel(51, 25, "━");
+         setPixel(54, 25, "━");
+      setPixel(55, 25, "━");
+         setPixel(58, 25, "━");
+      setPixel(59, 25, "━");
+        setPixel(62, 25, "━");
+      setPixel(63, 25, "━");
+        setPixel(66, 25, "━");
+      setPixel(67, 25, "━");
+        setPixel(70, 25, "━");
+      setPixel(71, 25, "━");
+      
+
+    escribirTextoVertical(4, 6, "CALLE DAMASCO", Color::VERDE_MATRIX);
+    setPixel(4, 0, "┃");
+    setPixel(4, 2, "┃");
+    setPixel(4, 4, "┃");
+    setPixel(4, 20, "┃");
+    setPixel(4, 22, "┃");
+    setPixel(4, 24, "┃");
+
+
+    
+
+    // ============================================================
+    //  ESQUINA DEL LA VEREDA 
+    // ============================================================
+    pincel.color = Color::ROJO;
+    setPixel(12, 23, "└");
+
+    // ============================================================
+    //  ESQUINAS DEL CERRAMIENTO
+    // ============================================================
+    pincel.color = Color::ROJO;
+    setPixel(20, 0, "┌");   // superior izquierda
+    setPixel(70, 0, "┐");   // superior derecha
+    //setPixel(70, 20, "┘");    // inferior derecha
+    setPixel(20, 20, "└");    // inferior izquierda
+
+    // ============================================================
+//  ESQUINAS DEL DORMITORIO
+// ============================================================
+pincel.color = Color::ROJO;
+setPixel(28, 0, "┌");   // superior izquierda
+setPixel(42, 0, "┐");   // superior derecha
+setPixel(42, 6, "┘");  // inferior derecha
+setPixel(28, 6, "└");  // inferior izquierda
 
 // ============================================================
-//  ESQUINAS DEL RECTANGULO SEPARADO
+//  ESQUINAS DEL PORTON
 // ============================================================
-    /*pincel.color = Color::VERDE_MATRIX;
-    setPixel(8, 0, "█");
-    setPixel(24, 0, "█");
-    setPixel(24, 6, "┘");
-    setPixel(8, 6, "└");*/
+pincel.color = Color::ROJO;
+setPixel(60, 19, "┌");  // superior izquierda
+//setPixel(70, 19, "┐");  // superior derecha
+setPixel(60, 21, "└");  // inferior izquierda
+setPixel(70, 21, "┘");  // inferior derecha
+
+
+
+    
 
     actualizarTagsDinamicos();
     imprimirCanvas();
     dibujarTags(tags);
     dibujarTags(tagsDinamicos);
 
-    escribirEnPosicion(30, 2, "CONTROL ENERGETICO", Color::VERDE_MATRIX, true);
+    escribirEnPosicion(60, 2, "CONTROL ENERGETICO", Color::VERDE_MATRIX, true);
     mostrarEstadisticasYPrompt();
 }

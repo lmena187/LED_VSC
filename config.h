@@ -50,7 +50,7 @@ struct EmojiTag {
 
 struct Config {
     bool usarColores       = true;
-    bool mostrarPuntos     = true;
+    bool mostrarPuntos     = false;
     int  colInicio         = 23;  // 23 para centrado preciso
     int  filaInicio        = 4;
 };

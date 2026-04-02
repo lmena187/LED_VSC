@@ -82,13 +82,20 @@ inline void hiloTeclado() {
             char cmd = teclaEsperando;
             teclaEsperando = ' ';
 
-            if (cmd == 'M' || cmd == 'm') {
+            /*if (cmd == 'M' || cmd == 'm') {
                 modoManualActivo = true;
                 stats.ultimaTecla = 'M';
                 std::lock_guard<std::mutex> lock(estado.mutexDibujo);
-                construirYDibujar();
+                construirYDibujar();*/
 
-            } else if (cmd == 'A' || cmd == 'a') {
+                if (cmd == 'M' || cmd == 'm') {
+    modoManualActivo = true;
+    stats.ultimaTecla = 'M';
+    system("espeak-ng -v es+f3 -s 120 -p 60 'Modo manual.......... activado' &");
+    std::lock_guard<std::mutex> lock(estado.mutexDibujo);
+    construirYDibujar();
+
+            /*} else if (cmd == 'A' || cmd == 'a') {
                 modoManualActivo = false;
                 stats.ultimaTecla = 'A';
                 if (s != -1) {
@@ -96,7 +103,20 @@ inline void hiloTeclado() {
                     send(s, &c, 1, 0);
                 }
                 std::lock_guard<std::mutex> lock(estado.mutexDibujo);
-                construirYDibujar();
+                construirYDibujar();*/
+
+
+                } else if (cmd == 'A' || cmd == 'a') {
+    modoManualActivo = false;
+    stats.ultimaTecla = 'A';
+    //system("espeak-ng -v es+f3 -s 120 -p 60 'Modo.. automatico..... activado' &");
+    system("espeak-ng -v es+f3 -s 120 -p 60 'Modo.. automático......... activado' &");
+    if (s != -1) {
+        char c = 'A';
+        send(s, &c, 1, 0);
+    }
+    std::lock_guard<std::mutex> lock(estado.mutexDibujo);
+    construirYDibujar();
 
             } else if (cmd == '1' || cmd == '0') {
                 if (!modoManualActivo) {
