@@ -21,8 +21,8 @@ namespace Color {
     const int GRIS_CLARO     = 250;
     const int AMARILLO       = 226;
     const int AMARILLO_ROTO  = 220;
-    const int ROJO = 196;
-    const int VERDE_MATRIX   = 46;  
+    const int ROJO           = 196;
+    const int VERDE_MATRIX   = 46;
 }
 
 struct TamanoTerminal { int columnas; int filas; };
@@ -51,8 +51,23 @@ struct EmojiTag {
 struct Config {
     bool usarColores       = true;
     bool mostrarPuntos     = false;
-    int  colInicio         = 23;  // 23 para centrado preciso
-    int  filaInicio        = 4;
+
+    // ── Posicion del canvas principal ──────────────────────
+    // Cambia colInicio para mover el canvas horizontalmente
+    // Cambia filaInicio para mover el canvas verticalmente
+    int  colInicio         = 23;
+    int  filaInicio        = 7;
+
+    // ── Posicion del bloque de estadisticas ────────────────
+    // filaStats controla cuantas filas hay entre el canvas
+    // y el bloque de estadisticas (Modo, prompt, advertencia)
+    // Layout resultante:
+    //   filaInicio + H + filaStats     → Modo + Teclas
+    //   filaInicio + H + filaStats + 1 → > [ ] prompt
+    //   filaInicio + H + filaStats + 2 → ! TECLA NO VALIDA
+    // Aumenta filaStats para bajar el bloque
+    // Reduce  filaStats para subir el bloque
+    int  filaStats         = 4;  // desplazamiento del bloque de estadisticas
 };
 
 struct Estado {
@@ -71,12 +86,12 @@ struct Pincel {
 //  ESTADISTICAS — uso del LED en memoria
 // ============================================================
 struct Estadisticas {
-    int         vecesEncendido   = 0;
+    int         vecesEncendido    = 0;
     int         segundosEncendido = 0;
-    time_t      tiempoEncendido  = 0;
-    bool        estaEncendido    = false;
-    std::string ultimoEvento     = "---";
-    char        ultimaTecla      = ' ';
+    time_t      tiempoEncendido   = 0;
+    bool        estaEncendido     = false;
+    std::string ultimoEvento      = "---";
+    char        ultimaTecla       = ' ';
 };
 
 extern Config        cfg;

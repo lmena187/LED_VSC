@@ -40,6 +40,6 @@ inline void registrarEvento(int nuevoEstado) {
     } else if (nuevoEstado == 0 && stats.estaEncendido) {
         stats.segundosEncendido += (int)(ahora - stats.tiempoEncendido);
         stats.estaEncendido      = false;
-        stats.ultimoEvento       = "APAGADO   " + horaActual();
+        stats.ultimoEvento       = "APAGADO " + horaActual();
     }
 }

@@ -22,6 +22,28 @@ inline std::string obtenerIPPuente() {
     return resultado.empty() ? "172.24.0.1" : resultado;
 }
 
+// ============================================================
+//  mostrarMensajeTemporal
+//  Muestra un mensaje de advertencia en rojo y lo borra
+//  automaticamente despues de 2 segundos.
+//  filaMsg = filaInicio + H + filaStats + 2  (linea 3 del bloque)
+// ============================================================
+inline void mostrarMensajeTemporal(int filaMsg, const std::string& mensaje) {
+    escribirEnPosicion(2, filaMsg, mensaje, Color::ROJO);
+    std::cout.flush();
+    std::thread([filaMsg]() {
+        sleep(2);
+        // Limpiar mensaje de advertencia
+        limpiarPosicion(2, filaMsg, 50);
+        // Limpiar prompt y resetear tecla
+        stats.ultimaTecla = ' ';
+        int filaPrompt = filaMsg - 1;  // siempre una fila arriba del mensaje
+        limpiarPosicion(2, filaPrompt, 50);
+        escribirEnPosicion(2, filaPrompt, "  > [ ]                    ", Color::VERDE_MATRIX);
+        std::cout.flush();
+    }).detach();
+}
+
 inline void hiloTCP(const std::string& ip, int puerto) {
     while (true) {
         int sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -74,58 +96,44 @@ inline void hiloTeclado() {
     while (true) {
         char tecla = getchar();
 
+        // fila del mensaje de advertencia — siempre consistente con escena.h
+        // para mover todo el bloque cambia cfg.filaStats en config.h
+        int filaMsg = cfg.filaInicio + H + cfg.filaStats + 2;
+
         // Enter — ejecutar la orden en espera
         if (tecla == '\n' || tecla == '\r') {
+            limpiarPosicion(2, filaMsg, 50);
+            std::cout.flush();
+
             if (teclaEsperando == ' ') continue;
 
             int s = estado.socket.load();
             char cmd = teclaEsperando;
             teclaEsperando = ' ';
 
-            /*if (cmd == 'M' || cmd == 'm') {
+            if (cmd == 'M' || cmd == 'm') {
                 modoManualActivo = true;
                 stats.ultimaTecla = 'M';
+                system("espeak-ng -v es+f3 -s 120 -p 60 'Modo manual.......... activado' &");
                 std::lock_guard<std::mutex> lock(estado.mutexDibujo);
-                construirYDibujar();*/
+                construirYDibujar();
 
-                if (cmd == 'M' || cmd == 'm') {
-    modoManualActivo = true;
-    stats.ultimaTecla = 'M';
-    system("espeak-ng -v es+f3 -s 120 -p 60 'Modo manual.......... activado' &");
-    std::lock_guard<std::mutex> lock(estado.mutexDibujo);
-    construirYDibujar();
-
-            /*} else if (cmd == 'A' || cmd == 'a') {
+            } else if (cmd == 'A' || cmd == 'a') {
                 modoManualActivo = false;
                 stats.ultimaTecla = 'A';
+                system("espeak-ng -v es+f3 -s 120 -p 60 'Modo.. automático......... activado' &");
                 if (s != -1) {
                     char c = 'A';
                     send(s, &c, 1, 0);
                 }
                 std::lock_guard<std::mutex> lock(estado.mutexDibujo);
-                construirYDibujar();*/
-
-
-                } else if (cmd == 'A' || cmd == 'a') {
-    modoManualActivo = false;
-    stats.ultimaTecla = 'A';
-    //system("espeak-ng -v es+f3 -s 120 -p 60 'Modo.. automatico..... activado' &");
-    system("espeak-ng -v es+f3 -s 120 -p 60 'Modo.. automático......... activado' &");
-    if (s != -1) {
-        char c = 'A';
-        send(s, &c, 1, 0);
-    }
-    std::lock_guard<std::mutex> lock(estado.mutexDibujo);
-    construirYDibujar();
+                construirYDibujar();
 
             } else if (cmd == '1' || cmd == '0') {
                 if (!modoManualActivo) {
-                    // Mostrar mensaje de error debajo del prompt
-                    int fila = cfg.filaInicio + H + 8;
-                    escribirEnPosicion(2, fila,
-                        "  ! TECLA NO VALIDA — ingresa M primero   ",
-                        Color::ROJO);
-                    std::cout.flush();
+                    // Tecla valida pero modo incorrecto
+                    mostrarMensajeTemporal(filaMsg,
+                        "  ! TECLA NO VALIDA — ingresa M primero   ");
                 } else {
                     if (s != -1) {
                         stats.ultimaTecla = cmd;
@@ -134,23 +142,38 @@ inline void hiloTeclado() {
                         mostrarEstadisticasYPrompt();
                     }
                 }
+            } else {
+                // Tecla completamente invalida
+                mostrarMensajeTemporal(filaMsg,
+                    "  ! TECLA NO VALIDA                        ");
             }
             continue;
         }
+
+        // Cualquier tecla — limpiar mensaje anterior siempre
+        limpiarPosicion(2, filaMsg, 50);
+        std::cout.flush();
 
         // Tecla valida — mostrar en prompt inmediatamente sin ejecutar
         if (tecla == 'M' || tecla == 'm' ||
             tecla == 'A' || tecla == 'a' ||
             tecla == '1' || tecla == '0') {
 
-            // Limpiar mensaje de error anterior
-            int fila = cfg.filaInicio + H + 8;
-            limpiarPosicion(2, fila, 50);
-
             teclaEsperando = tecla;
             stats.ultimaTecla = tecla;
             std::lock_guard<std::mutex> lock(estado.mutexDibujo);
             mostrarEstadisticasYPrompt();
+
+        } else {
+            // Tecla invalida — mostrar en prompt y mensaje temporal
+            teclaEsperando = ' ';
+            stats.ultimaTecla = tecla;
+            {
+                std::lock_guard<std::mutex> lock(estado.mutexDibujo);
+                mostrarEstadisticasYPrompt();
+            }
+            mostrarMensajeTemporal(filaMsg,
+                "  ! TECLA NO VALIDA                        ");
         }
     }
 }

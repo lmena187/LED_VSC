@@ -142,7 +142,6 @@ figuras.push_back(dormitorioIzquierdo);
 pincel.color = Color::ROJO;
 setPixel(70, 19, "┐");  // superior derecha
 
-
 // Lado superior
 Figura portonSuperior;
 portonSuperior.path   = "M 61,38 H 69";
@@ -199,12 +198,18 @@ inline void actualizarTagsDinamicos() {
     tagsDinamicos.clear();
     if (estado.led.load() == 1) {
         limpiarPosicion(14, 8, 20);
-        tagsDinamicos.push_back({57, 7, "❶", Color::AMARILLO});
-        tagsDinamicos.push_back({57, 8, "ON",  Color::AMARILLO});
+        tagsDinamicos.push_back({57, 9, "❶", Color::AMARILLO});
+        tagsDinamicos.push_back({57,10, "ON",  Color::AMARILLO});
     } else {
         limpiarPosicion(14, 8, 20);
-        tagsDinamicos.push_back({57, 7, "❶",  Color::BLANCO_ROTO});
-        tagsDinamicos.push_back({57, 8, "OFF", Color::BLANCO_ROTO});
+        tagsDinamicos.push_back({57, 9, "❶",  Color::BLANCO_ROTO});
+        tagsDinamicos.push_back({57, 10, "OFF", Color::BLANCO_ROTO});
+        //tagsDinamicos.push_back({57, 10, "ᵒⁿ", Color::AMARILLO});  // superíndice
+    
+    
+     // tagsDinamicos.push_back({50, 2, "𝙎𝙄𝙎𝙏𝙀𝙈𝘼 𝘿𝙀 𝙇𝙐𝘾𝙀𝙎 𝘼𝙐𝙏𝙊𝙈𝘼𝙏𝙄𝘾𝘼𝙎", Color::VERDE_MATRIX});
+    
+    
     }
 }
 
@@ -212,53 +217,32 @@ inline void actualizarTagsDinamicos() {
 //  MOSTRAR ESTADISTICAS Y PROMPT
 // ============================================================
 inline void mostrarEstadisticasYPrompt() {
-    int tiempoMostrar = stats.segundosEncendido;
-    if (stats.estaEncendido)
-        tiempoMostrar += (int)(time(nullptr) - stats.tiempoEncendido);
+    // fila base del bloque de estadisticas
+    // para mover todo el bloque cambia cfg.filaStats en config.h
+    int fila = cfg.filaInicio + H + cfg.filaStats;
 
-    int fila = cfg.filaInicio + H + 1;
-
-    escribirEnPosicion(2, fila,
-        "  Veces encendido : " + std::to_string(stats.vecesEncendido) + "   ",
-        Color::VERDE_MATRIX);
-    escribirEnPosicion(2, fila + 1,
-        "  Tiempo ON       : " + formatearTiempo(tiempoMostrar) + "   ",
-        Color::VERDE_MATRIX);
-    escribirEnPosicion(2, fila + 2,
-        "  Ultimo evento   : " + stats.ultimoEvento + "   ",
-        Color::VERDE_MATRIX);
-    escribirEnPosicion(2, fila + 3,
-        "  --------------------------------   ",
-        Color::VERDE_MATRIX);
-
-    // Modo actual y teclas disponibles
-    if (modoManualActivo) {
-        escribirEnPosicion(2, fila + 4,
-            "  Modo: MANUAL                       ",
-            Color::AMARILLO, true);
-        escribirEnPosicion(2, fila + 5,
-            "  Teclas: 1=ON  0=OFF  A=Auto        ",
-            Color::VERDE_MATRIX);
-    } else {
-        escribirEnPosicion(2, fila + 4,
-            "  Modo: AUTOMATICO                   ",
-            Color::ROJO, true);
-        escribirEnPosicion(2, fila + 5,
-            "  Teclas: M=Manual  A=Auto           ",
-            Color::VERDE_MATRIX);
-    } 
-
-    // Prompt con ultima tecla presionada
     std::string teclaStr = (stats.ultimaTecla == ' ') ? " " : std::string(1, stats.ultimaTecla);
-    escribirEnPosicion(2, fila + 6,
+
+    // Linea 1 — modo actual y teclas disponibles
+    if (modoManualActivo) {
+        escribirEnPosicion(2, fila,
+            "  Modo: MANUAL     Teclas: 1=ON  0=OFF  A=AUTO        ",
+            Color::VERDE_MATRIX, true);
+    } else {
+        escribirEnPosicion(2, fila,
+            "  Modo: AUTOMATICO    Teclas: M=Manual  A=Auto        ",
+            Color::VERDE_MATRIX, true);
+    }
+
+    // Linea 2 — prompt con ultima tecla presionada
+    escribirEnPosicion(2, fila + 1,
         "  > [" + teclaStr + "]                    ",
         Color::VERDE_MATRIX);
 
     // Cursor al final del prompt
-    std::cout << "\033[" << (fila + 6) << ";8H";
+    std::cout << "\033[" << (fila + 1) << ";8H";
     std::cout.flush();
 }
-
 // ============================================================
 //  CONSTRUIR Y DIBUJAR
 // ============================================================
@@ -281,7 +265,7 @@ inline void construirYDibujar() {
       setPixel(21, 25, "━");
         setPixel(24, 25, "━");
       setPixel(25, 25, "━");
-setPixel(28, 25, "━");
+      setPixel(28, 25, "━");
       setPixel(29, 25, "━");
 
       setPixel(50, 25, "━");
@@ -306,19 +290,16 @@ setPixel(28, 25, "━");
     setPixel(4, 22, "┃");
     setPixel(4, 24, "┃");
 
-
-    
-
     // ============================================================
     //  ESQUINA DEL LA VEREDA 
     // ============================================================
-    pincel.color = Color::ROJO;
+    pincel.color = Color::VERDE_MATRIX;
     setPixel(12, 23, "└");
 
     // ============================================================
     //  ESQUINAS DEL CERRAMIENTO
     // ============================================================
-    pincel.color = Color::ROJO;
+    pincel.color = Color::VERDE_MATRIX;
     setPixel(20, 0, "┌");   // superior izquierda
     setPixel(70, 0, "┐");   // superior derecha
     //setPixel(70, 20, "┘");    // inferior derecha
@@ -327,7 +308,7 @@ setPixel(28, 25, "━");
     // ============================================================
 //  ESQUINAS DEL DORMITORIO
 // ============================================================
-pincel.color = Color::ROJO;
+pincel.color = Color::VERDE_MATRIX;
 setPixel(28, 0, "┌");   // superior izquierda
 setPixel(42, 0, "┐");   // superior derecha
 setPixel(42, 6, "┘");  // inferior derecha
@@ -336,21 +317,31 @@ setPixel(28, 6, "└");  // inferior izquierda
 // ============================================================
 //  ESQUINAS DEL PORTON
 // ============================================================
-pincel.color = Color::ROJO;
+pincel.color = Color::VERDE_MATRIX;
 setPixel(60, 19, "┌");  // superior izquierda
 //setPixel(70, 19, "┐");  // superior derecha
 setPixel(60, 21, "└");  // inferior izquierda
 setPixel(70, 21, "┘");  // inferior derecha
-
-
-
-    
 
     actualizarTagsDinamicos();
     imprimirCanvas();
     dibujarTags(tags);
     dibujarTags(tagsDinamicos);
 
-    escribirEnPosicion(60, 2, "CONTROL ENERGETICO", Color::VERDE_MATRIX, true);
+       
+    //escribirEnPosicion(50, 2, "C͇̜̞̦̣͕̟̈̍͊̂̉͌̎͗͊O̲̞̟̳̲̲̝̲̥̱͈̭̜̥̞̓͂̽̀Ṋ͔̤͉͔̜̤̟̟͓̔̏̋̄̈́ͅT̫͈͎̘͇̖͍̠̤̰̘͚̈͒̓̏̉̄̒̎̀̓͑͌̒̀̚Ř̤̘̭̩̘͍͙̣̲͕͖̮̫̠̔͌́̄͑O̲͍̯̫̘̪̗͔̠̯̥̲̣͖͛̏̄̂͊̀L̠͖̬͇͗͆̃̇ͅ Ǎ̳͉̱̩̩̟̞̩̖͓͔͍͚̮̳͕̃́̅̚Ṷ̭̭͙̮̣̞̿̑͑͑̋̏̀̇͒̄̐͛̉̃T͎̗̲̞̜̗̤̰͓͍͔͈̣̄̍̀̓͗́̓̀̚Ŏ̦̜̦͔̩̫̎̆̾ͅM̱̜̪͇̰̝̖͓̞͓͕̝̳̓̂̂̅̓̾͋͊͋̾̂͐̋̾͗̚À̜̭̟̱̣̘͔̠̫͇̃̐̒͒͒T̥̤͎͔͖̀̏̐̿̓̌́͊̏̒͗͛͛̓̍̎I͚̜̥̭̤̠̱̩̿̈̔͗̋͗̀C̭͔̗͚̏̑̑̋̓̍̾́́̍́O̤̝͓͉̙̜̱͛̐͐̀͌͂̓̓̓̂̿̀̚ Ḓ̙̥͍͉͖̦̿̓̀́̑Ê̠̳̣̪̖̣̗͉̩̒͒̿͌͊̊͂̌̓̓̒̀ͅ L͙̞̠͙̱̞̳̯̘̟̤̮͉̥̥̐̈̀́̀̌͑̊̾̊͑̑͗̓ͅṲ̘͕͎̲̙̓̿̅̓̾͗͂̌̀̓͐̏̀̾͛͒C͕̫̤͙̪͚͈͍̣̅͆̃̚Ê̩͓̞̗̦̠̤͊͛̌͑̋̓̅̑S̩̳͍̜͈͈͇͖̟̘̓̀̔͒̀͑", Color::VERDE_MATRIX, true);
+   
+   
+   
+   
+    escribirEnPosicion(50, 2, "S͉̟͇̘̠̟̘̓̔̈́͐͗̒̌̌͐̚ͅI͖̳̥̗̱̩͚̦͔̭͆͌̐̍̉͗͐̏̌S̰̫̖͇̙̓̍́̔̀̃͊̏̇̆Ṭ̲̩͉͙̦͋̍́̑͑͋͂̌̍͛̐ͅE͙̭̘̲̲̠͚̙͓̋̀̌̀͛̎̆̇͐͗ͅͅM̘̗̪̟͔͕͆͗͑̚ͅÅ̗̰̖̯̮̣͖͔̥͍͙̟̉̊̽ D̟̤͔̜̪͖͍̞̜͉͎̙̔̂̿̚É̯̜͇̬͔̜̱̫̲͈͐̇̑̈ L̞̠̲͍̝̱̞̞̘̣͛̊̄͌͆͛̎̾́̐̆̅U͍̥͇͕͎̙͈͊̽̀̏̒C̩̣̭͉͚̩͕͖͐̅̓͐̐͐̚È͚͉̲̫̫͇̰̽̐̇͗̚S̲͓͖͇̬̫̬͍̦͉̮̱͑̆̀̉̐̈́ A̰̤̲̱̓͋̈̎̓̾͒̓̃͐͊̉Ü̮̞̘͈͗̈͂̿̓̓̀͋͒T͉͚̣̞̪̪̰͔͉̃̊͑́̄́̄͒̾͂O̲̯͚͇̙̤͉̥̣̳̲̎̏̄̿̾̀̚ͅM̜̦̟͕̟͍̳̓̓͂̽̐̊̈́͂̎Ạ̦̫̣̗̮̯͔̖̩͛̐̊̎̌̈͗̈͑̚T̰̬̙̘̀̒̓͂̋̓̔̒̈I̙̙̮̭͍̘̮̫͖̜̱̍̿̆̊̓̄͐C̬̗̱͔̜̙̣̿͋͐̅̈͂̎̆ͅͅA̟̟͖̱̤͇͇̒̈́̋͑͆S̞͔̟͈͓̎͂̔̈", Color::VERDE_MATRIX, true);
+   
+   
+   
+   
+   
+    
+    
+    
     mostrarEstadisticasYPrompt();
 }

@@ -62,7 +62,6 @@ inline void line(int x1, int y1, int x2, int y2) {
     }
 }
 
-//inline std::vector<Punto> parseSVG(const std::string& d) {
   inline std::vector<Punto> parseSVG(const std::string& d, bool ladoIndependiente = false) {
     std::vector<Punto> vertices;
     std::string n = d;
@@ -90,16 +89,7 @@ inline void line(int x1, int y1, int x2, int y2) {
                     vertices.push_back({curX,curY});
                 } continue;
             }
-           // double x,y; if (ss>>x>>y) {
-               // int xi=(int)round(x), yi=(int)round(y);
-               // if (cmd=='M'){curX=xi;curY=yi;primerMov=false;}
-               // else if (cmd=='m'){if(primerMov){curX=xi;curY=yi;primerMov=false;}else{curX+=xi;curY+=yi;}}
-                //else if (cmd=='L'){curX=xi;curY=yi;}
-                //else if (cmd=='l'){curX+=xi;curY+=yi;}
-
-
-
-
+    
                 double x,y; if (ss>>x>>y) {
     int xi=(int)round(x);
     // Correccion de aspecto en Y para lados independientes
