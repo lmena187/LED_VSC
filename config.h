@@ -50,13 +50,13 @@ struct EmojiTag {
 
 struct Config {
     bool usarColores       = true;
-    bool mostrarPuntos     = false;
+    bool mostrarPuntos     = true;
 
     // ── Posicion del canvas principal ──────────────────────
     // Cambia colInicio para mover el canvas horizontalmente
     // Cambia filaInicio para mover el canvas verticalmente
     int  colInicio         = 23;
-    int  filaInicio        = 7;
+    int  filaInicio        = 4;
 
     // ── Posicion del bloque de estadisticas ────────────────
     // filaStats controla cuantas filas hay entre el canvas

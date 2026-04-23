@@ -1,6 +1,6 @@
 // ============================================================
 //  estadisticas.h — Registro de uso del LED
-//  Version minimalista: solo memoria, sin archivos.
+//  Version minimalista: memoria + exportacion a disco.
 // ============================================================
 #pragma once
 
@@ -8,6 +8,7 @@
 #include <ctime>
 #include <sstream>
 #include <iomanip>
+#include <fstream>
 
 inline std::string formatearTiempo(int segundos) {
     int h = segundos / 3600;
@@ -42,4 +43,18 @@ inline void registrarEvento(int nuevoEstado) {
         stats.estaEncendido      = false;
         stats.ultimoEvento       = "APAGADO " + horaActual();
     }
+}
+
+// ============================================================
+//  EXPORTAR A DISCO
+//  Escribe estadisticas.txt en la carpeta del proyecto.
+//  El archivo se sobreescribe en cada evento — siempre actual.
+//  Python lo lee para generar el PDF del reporte Favorita.
+// ============================================================
+inline void exportarEstadisticas() {
+    std::ofstream f("estadisticas.txt");
+    if (!f.is_open()) return;
+    f << "veces_encendido="    << stats.vecesEncendido    << "\n";
+    f << "segundos_encendido=" << stats.segundosEncendido << "\n";
+    f << "ultimo_evento="      << stats.ultimoEvento      << "\n";
 }

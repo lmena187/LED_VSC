@@ -8,8 +8,9 @@
 #include <thread>
 #include <unistd.h>
 
-// Opción: activar/desactivar el logo fácilmente
-#define USAR_LOGO 1
+// Logo: desactivado hasta tener chafa instalado y ruta confirmada
+// Para activar: descomentar el system() y cambiar USAR_LOGO a 1
+#define USAR_LOGO 0
 
 Config        cfg;
 Estado        estado;
@@ -34,19 +35,15 @@ int main() {
     system("stty -echo -icanon min 1");
 
     // ============================================================
-    // LOGO MARCA DE AGUA (esquina superior izquierda, fuera del canvas)
+    //  LOGO (activar cuando chafa este instalado y ruta confirmada)
     // ============================================================
 #if USAR_LOGO == 1
-     system("tput cup 0 0 && chafa -f sixel --size=30x20 '/mnt/c/Users/Usuario/Documents/PlatformIO/Projects/LED_VSC/LOGO/favorita.png' 2>/dev/null");
-    //system("tput cup 0 0 && chafa -f sixel --size=30x20 '/mnt/c/Users/Usuario/Documents/PlatformIO/Projects/LED_VSC/LOGO/logoCompletoFavorita.png' 2>/dev/null");
-    //system("tput cup 0 0 && chafa -f sixel --size=30x15 --brightness 0 --contrast 1.1 '/mnt/c/Users/Usuario/Documents/PlatformIO/Projects/LED_VSC/LOGO/logoCompletoFavorita.png' 2>/dev/null");
-   //system("tput cup 0 0 && convert '/mnt/c/Users/Usuario/Documents/PlatformIO/Projects/LED_VSC/LOGO/logoCompletoFavorita.png' -brightness-contrast 40x30 png:- | chafa -f sixel --size=30x20 2>/dev/null");
-   //system("tput cup 0 0 && convert '/mnt/c/Users/Usuario/Documents/PlatformIO/Projects/LED_VSC/LOGO/favorita.png' -brightness-contrast 40x30 png:- | chafa -f sixel --size=30x20 2>/dev/null");
-    
-   // Opcional: devolver el cursor a una posición segura (no afecta al programa)
+    system("tput cup 0 4 && chafa -f sixel --size=30x20 '/mnt/c/Users/Usuario/Documents/PlatformIO/Projects/LED_VSC/LOGO/favorita0.png' 2>/dev/null");
+#endif
+
+    // Cursor a posicion segura — siempre necesario
     std::cout << "\033[0;0H";
     std::cout.flush();
-#endif
 
     // Hilo TCP
     std::string winIP = obtenerIPPuente();

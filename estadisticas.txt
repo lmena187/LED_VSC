@@ -1,0 +1,3 @@
+veces_encendido=11
+segundos_encendido=56
+ultimo_evento=APAGADO 20:57:05

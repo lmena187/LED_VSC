@@ -15,7 +15,7 @@ CXXFLAGS = -std=c++11 -Wall -Wextra -pthread
 # ── Archivos del proyecto ───────────────────────────────────
 TARGET  = led
 MAIN    = main.cpp
-HEADERS = config.h canvas.h escena.h red.h estadisticas.h
+HEADERS = config.h canvas.h escena.h red.h estadisticas.h braille.h
 
 # ── Colores para mensajes en terminal ───────────────────────
 VERDE   = \033[0;32m

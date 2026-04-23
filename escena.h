@@ -7,6 +7,8 @@
 #include "config.h"
 #include "canvas.h"
 #include "estadisticas.h"
+#include "braille.h"   // <--- AGREGAR ESTA LÍNEA
+
 
 // ============================================================
 //  CONSTRUIR FIGURAS SVG
@@ -26,9 +28,9 @@ inline void construirFiguras() {
 
 // Vereda frente (horizontal)
 Figura veredaFrente;
-veredaFrente.path   = "M 13,46 H 73";
+veredaFrente.path   = "M 12,46 H 74";
 veredaFrente.color  = Color::VERDE_MATRIX;
-veredaFrente.trazo  = "─";
+veredaFrente.trazo  = "▀";
 veredaFrente.grosor = 1;
 veredaFrente.ladoIndependiente = true;
 figuras.push_back(veredaFrente);
@@ -37,7 +39,7 @@ figuras.push_back(veredaFrente);
 Figura veredaLateral;
 veredaLateral.path   = "M 12,0 V 44";
 veredaLateral.color  = Color::VERDE_MATRIX;
-veredaLateral.trazo  = "│";
+veredaLateral.trazo  = "█";
 veredaLateral.grosor = 1;
 veredaLateral.ladoIndependiente = true;
 figuras.push_back(veredaLateral);
@@ -198,18 +200,12 @@ inline void actualizarTagsDinamicos() {
     tagsDinamicos.clear();
     if (estado.led.load() == 1) {
         limpiarPosicion(14, 8, 20);
-        tagsDinamicos.push_back({57, 9, "❶", Color::AMARILLO});
-        tagsDinamicos.push_back({57,10, "ON",  Color::AMARILLO});
+        tagsDinamicos.push_back({57, 7, "❶", Color::AMARILLO});
+        tagsDinamicos.push_back({57,8, "ON",  Color::AMARILLO});
     } else {
         limpiarPosicion(14, 8, 20);
-        tagsDinamicos.push_back({57, 9, "❶",  Color::BLANCO_ROTO});
-        tagsDinamicos.push_back({57, 10, "OFF", Color::BLANCO_ROTO});
-        //tagsDinamicos.push_back({57, 10, "ᵒⁿ", Color::AMARILLO});  // superíndice
-    
-    
-     // tagsDinamicos.push_back({50, 2, "𝙎𝙄𝙎𝙏𝙀𝙈𝘼 𝘿𝙀 𝙇𝙐𝘾𝙀𝙎 𝘼𝙐𝙏𝙊𝙈𝘼𝙏𝙄𝘾𝘼𝙎", Color::VERDE_MATRIX});
-    
-    
+        tagsDinamicos.push_back({57, 7, "❶",  Color::BLANCO_ROTO});
+        tagsDinamicos.push_back({57, 8, "OFF", Color::BLANCO_ROTO});
     }
 }
 
@@ -225,12 +221,12 @@ inline void mostrarEstadisticasYPrompt() {
 
     // Linea 1 — modo actual y teclas disponibles
     if (modoManualActivo) {
-        escribirEnPosicion(2, fila,
-            "  Modo: MANUAL     Teclas: 1=ON  0=OFF  A=AUTO        ",
+          escribirEnPosicion(2, fila,
+            "  Modo: MANUAL     Teclas: 1=ON  0=OFF  A=AUTO  R=Reporte",
             Color::VERDE_MATRIX, true);
     } else {
-        escribirEnPosicion(2, fila,
-            "  Modo: AUTOMATICO    Teclas: M=Manual  A=Auto        ",
+       escribirEnPosicion(2, fila,
+            "  Modo: AUTOMATICO    Teclas: M=Manual  A=Auto  R=Reporte",
             Color::VERDE_MATRIX, true);
     }
 
@@ -242,6 +238,7 @@ inline void mostrarEstadisticasYPrompt() {
     // Cursor al final del prompt
     std::cout << "\033[" << (fila + 1) << ";8H";
     std::cout.flush();
+
 }
 // ============================================================
 //  CONSTRUIR Y DIBUJAR
@@ -290,11 +287,12 @@ inline void construirYDibujar() {
     setPixel(4, 22, "┃");
     setPixel(4, 24, "┃");
 
+
     // ============================================================
-    //  ESQUINA DEL LA VEREDA 
-    // ============================================================
-    pincel.color = Color::VERDE_MATRIX;
-    setPixel(12, 23, "└");
+//  PLANTA DEL EXTERIOR DE LA CASA
+// ============================================================
+
+tags.push_back({37, 18, "🌿", Color::VERDE_MATRIX});
 
     // ============================================================
     //  ESQUINAS DEL CERRAMIENTO
@@ -327,21 +325,109 @@ setPixel(70, 21, "┘");  // inferior derecha
     imprimirCanvas();
     dibujarTags(tags);
     dibujarTags(tagsDinamicos);
-
+   
+   
+   
+    //escribirEnPosicion(50, 2, "S͉̟͇̘̠̟̘̓̔̈́͐͗̒̌̌͐̚ͅI͖̳̥̗̱̩͚̦͔̭͆͌̐̍̉͗͐̏̌S̰̫̖͇̙̓̍́̔̀̃͊̏̇̆Ṭ̲̩͉͙̦͋̍́̑͑͋͂̌̍͛̐ͅE͙̭̘̲̲̠͚̙͓̋̀̌̀͛̎̆̇͐͗ͅͅM̘̗̪̟͔͕͆͗͑̚ͅÅ̗̰̖̯̮̣͖͔̥͍͙̟̉̊̽ D̟̤͔̜̪͖͍̞̜͉͎̙̔̂̿̚É̯̜͇̬͔̜̱̫̲͈͐̇̑̈ L̞̠̲͍̝̱̞̞̘̣͛̊̄͌͆͛̎̾́̐̆̅U͍̥͇͕͎̙͈͊̽̀̏̒C̩̣̭͉͚̩͕͖͐̅̓͐̐͐̚È͚͉̲̫̫͇̰̽̐̇͗̚S̲͓͖͇̬̫̬͍̦͉̮̱͑̆̀̉̐̈́ A̰̤̲̱̓͋̈̎̓̾͒̓̃͐͊̉Ü̮̞̘͈͗̈͂̿̓̓̀͋͒T͉͚̣̞̪̪̰͔͉̃̊͑́̄́̄͒̾͂O̲̯͚͇̙̤͉̥̣̳̲̎̏̄̿̾̀̚ͅM̜̦̟͕̟͍̳̓̓͂̽̐̊̈́͂̎Ạ̦̫̣̗̮̯͔̖̩͛̐̊̎̌̈͗̈͑̚T̰̬̙̘̀̒̓͂̋̓̔̒̈I̙̙̮̭͍̘̮̫͖̜̱̍̿̆̊̓̄͐C̬̗̱͔̜̙̣̿͋͐̅̈͂̎̆ͅͅA̟̟͖̱̤͇͇̒̈́̋͑͆S̞͔̟͈͓̎͂̔̈", Color::VERDE_MATRIX, true);
+   
+   
+       // ============================================================
+    //  CABECERA PRINCIPAL
+    // ============================================================
+    
+    escribirEnPosicion(50, 1, "ILUMINACION INTELIGENTE CON ESP32", Color::VERDE_MATRIX, true);
+    escribirEnPosicion(50, 2, "══════════════════════════════════", Color::VERDE_MATRIX, false);
+    //escribirEnPosicion(50, 3, "        Casa De Luis Mena         ", Color::VERDE_MATRIX, true);
+   
        
-    //escribirEnPosicion(50, 2, "C͇̜̞̦̣͕̟̈̍͊̂̉͌̎͗͊O̲̞̟̳̲̲̝̲̥̱͈̭̜̥̞̓͂̽̀Ṋ͔̤͉͔̜̤̟̟͓̔̏̋̄̈́ͅT̫͈͎̘͇̖͍̠̤̰̘͚̈͒̓̏̉̄̒̎̀̓͑͌̒̀̚Ř̤̘̭̩̘͍͙̣̲͕͖̮̫̠̔͌́̄͑O̲͍̯̫̘̪̗͔̠̯̥̲̣͖͛̏̄̂͊̀L̠͖̬͇͗͆̃̇ͅ Ǎ̳͉̱̩̩̟̞̩̖͓͔͍͚̮̳͕̃́̅̚Ṷ̭̭͙̮̣̞̿̑͑͑̋̏̀̇͒̄̐͛̉̃T͎̗̲̞̜̗̤̰͓͍͔͈̣̄̍̀̓͗́̓̀̚Ŏ̦̜̦͔̩̫̎̆̾ͅM̱̜̪͇̰̝̖͓̞͓͕̝̳̓̂̂̅̓̾͋͊͋̾̂͐̋̾͗̚À̜̭̟̱̣̘͔̠̫͇̃̐̒͒͒T̥̤͎͔͖̀̏̐̿̓̌́͊̏̒͗͛͛̓̍̎I͚̜̥̭̤̠̱̩̿̈̔͗̋͗̀C̭͔̗͚̏̑̑̋̓̍̾́́̍́O̤̝͓͉̙̜̱͛̐͐̀͌͂̓̓̓̂̿̀̚ Ḓ̙̥͍͉͖̦̿̓̀́̑Ê̠̳̣̪̖̣̗͉̩̒͒̿͌͊̊͂̌̓̓̒̀ͅ L͙̞̠͙̱̞̳̯̘̟̤̮͉̥̥̐̈̀́̀̌͑̊̾̊͑̑͗̓ͅṲ̘͕͎̲̙̓̿̅̓̾͗͂̌̀̓͐̏̀̾͛͒C͕̫̤͙̪͚͈͍̣̅͆̃̚Ê̩͓̞̗̦̠̤͊͛̌͑̋̓̅̑S̩̳͍̜͈͈͇͖̟̘̓̀̔͒̀͑", Color::VERDE_MATRIX, true);
-   
-   
-   
-   
-    escribirEnPosicion(50, 2, "S͉̟͇̘̠̟̘̓̔̈́͐͗̒̌̌͐̚ͅI͖̳̥̗̱̩͚̦͔̭͆͌̐̍̉͗͐̏̌S̰̫̖͇̙̓̍́̔̀̃͊̏̇̆Ṭ̲̩͉͙̦͋̍́̑͑͋͂̌̍͛̐ͅE͙̭̘̲̲̠͚̙͓̋̀̌̀͛̎̆̇͐͗ͅͅM̘̗̪̟͔͕͆͗͑̚ͅÅ̗̰̖̯̮̣͖͔̥͍͙̟̉̊̽ D̟̤͔̜̪͖͍̞̜͉͎̙̔̂̿̚É̯̜͇̬͔̜̱̫̲͈͐̇̑̈ L̞̠̲͍̝̱̞̞̘̣͛̊̄͌͆͛̎̾́̐̆̅U͍̥͇͕͎̙͈͊̽̀̏̒C̩̣̭͉͚̩͕͖͐̅̓͐̐͐̚È͚͉̲̫̫͇̰̽̐̇͗̚S̲͓͖͇̬̫̬͍̦͉̮̱͑̆̀̉̐̈́ A̰̤̲̱̓͋̈̎̓̾͒̓̃͐͊̉Ü̮̞̘͈͗̈͂̿̓̓̀͋͒T͉͚̣̞̪̪̰͔͉̃̊͑́̄́̄͒̾͂O̲̯͚͇̙̤͉̥̣̳̲̎̏̄̿̾̀̚ͅM̜̦̟͕̟͍̳̓̓͂̽̐̊̈́͂̎Ạ̦̫̣̗̮̯͔̖̩͛̐̊̎̌̈͗̈͑̚T̰̬̙̘̀̒̓͂̋̓̔̒̈I̙̙̮̭͍̘̮̫͖̜̱̍̿̆̊̓̄͐C̬̗̱͔̜̙̣̿͋͐̅̈͂̎̆ͅͅA̟̟͖̱̤͇͇̒̈́̋͑͆S̞͔̟͈͓̎͂̔̈", Color::VERDE_MATRIX, true);
-   
-   
-   
-   
-   
+limpiarBraille();
+
+       // ============================================================
+       //  EJEMPLO: CANVAS BRAILLE LLENO (columna vertical)
+       //  Resultado: 1 carácter de ancho × 17 caracteres de alto
+       //  Todos los caracteres serán ⠿ (Braille lleno)
+       // ============================================================
+       
+       limpiarBraille();
+       
+       // Recorrer todos los píxeles (2 de ancho × 68 de alto)
+       for (int y = 0; y < BRAILLE_PIXEL_H; y++) {
+           for (int x = 0; x < BRAILLE_PIXEL_W; x++) {
+               setPixelBraille(x, y);
+           }
+       }
+       
+       // Mostrar el canvas en la posición (fila 1, columna 1)
+       imprimirBraille(4, 39, Color::VERDE_MATRIX);
+
+
+    // ============================================================
+    //  LADRILLOS AMARILLOS DE VEREDA PEATONAL ( Usando caracteres Braille individuales para mayor detalle y estilo visual )
+    // ============================================================
+    
+       //
+
+    bool ladrilloAmarillo1[8] = {1,1,1,1,1,1,1,1}; // ⠿
+    bool ladrilloAmarillo2[8] = {1,1,1,1,1,1,1,1}; // ⠿
+    bool ladrilloAmarillo3[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo4[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo5[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo6[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo7[8] = {1,1,1,1,1,1,1,1};  // ⠿
+
+    bool ladrilloAmarillo8[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo9[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo10[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo11[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo12[8] = {1,1,1,1,1,1,1,1};  // ⠿
+
+    bool ladrilloAmarillo13[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo14[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo15[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo16[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo17[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo18[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo19[8] = {1,1,1,1,1,1,1,1};  // ⠿       
+    bool ladrilloAmarillo20[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo21[8] = {1,1,1,1,1,1,1,1};  // ⠿
+    bool ladrilloAmarillo22[8] = {1,1,1,1,1,1,1,1};  // ⠿
     
     
     
-    mostrarEstadisticasYPrompt();
+
+    dibujarCaracterBraille(21, 36, ladrilloAmarillo1, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(21, 37, ladrilloAmarillo2, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(21, 38, ladrilloAmarillo3, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(21, 39, ladrilloAmarillo4, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(21, 40, ladrilloAmarillo5, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(21, 41, ladrilloAmarillo6, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(21, 42, ladrilloAmarillo7, Color::VERDE_MATRIX);
+
+    dibujarCaracterBraille(22, 36, ladrilloAmarillo8, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(23, 36, ladrilloAmarillo9, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(24, 36, ladrilloAmarillo10, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(25, 36, ladrilloAmarillo11, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(26, 36, ladrilloAmarillo12, Color::VERDE_MATRIX);
+
+    dibujarCaracterBraille(26, 37, ladrilloAmarillo13, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(26, 38, ladrilloAmarillo14, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(26, 39, ladrilloAmarillo15, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(26, 40, ladrilloAmarillo16, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(26, 41, ladrilloAmarillo17, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(26, 42, ladrilloAmarillo18, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(26, 43, ladrilloAmarillo19, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(26, 44, ladrilloAmarillo20, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(26, 45, ladrilloAmarillo21, Color::VERDE_MATRIX);
+    dibujarCaracterBraille(26, 46, ladrilloAmarillo22, Color::VERDE_MATRIX);
+
+
+
+ 
+
+   
+
+
+
+mostrarEstadisticasYPrompt();
+ 
 }
