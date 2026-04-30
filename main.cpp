@@ -4,6 +4,7 @@
 // ============================================================
 
 #include "red.h"
+#include "splash.h"
 #include <clocale>
 #include <thread>
 #include <unistd.h>
@@ -33,6 +34,9 @@ int main() {
 
     // Ocultar lo que escribe el usuario y enviar cada tecla inmediatamente
     system("stty -echo -icanon min 1");
+        if (!splashAutenticar()) return 0;
+std::cout << "\033[2J\033[H";  // limpiar pantalla antes de arrancar
+std::cout.flush();
 
     // ============================================================
     //  LOGO (activar cuando chafa este instalado y ruta confirmada)

@@ -136,10 +136,10 @@ inline void hiloTeclado() {
 
 
 
-      } else if (cmd == 'R' || cmd == 'r') {
+    } else if (cmd == 'R' || cmd == 'r') {
     stats.ultimaTecla = 'R';
     system("python3 /home/luislinux/LED_VSC/reporte_favorita.py > /dev/null 2>&1");
-    system("cmd.exe /c start \"\" \"C:\\Users\\Usuario\\Documents\\reporte_favorita.pdf\" > /dev/null 2>&1");
+    system("zathura /home/luislinux/LED_VSC/reporte_favorita.pdf > /dev/null 2>&1 &");
     std::lock_guard<std::mutex> lock(estado.mutexDibujo);
     construirYDibujar();
 

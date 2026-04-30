@@ -22,10 +22,10 @@ PAGE_W = 25 * cm
 PAGE_H = 27.5 * cm
 
 # Medidas y posicion del logo
-LOGO_W = 4.5 * cm
-LOGO_H = 1.5 * cm
+LOGO_W = 3 * cm
+LOGO_H = 2 * cm
 LOGO_X = 1.0 * cm
-LOGO_Y = PAGE_H - 1.0 * cm - LOGO_H
+LOGO_Y = PAGE_H - 0.1 * cm - LOGO_H
 
 # Margenes
 MARGEN_IZQ = 1.0 * cm
