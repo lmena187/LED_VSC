@@ -23,6 +23,14 @@ namespace Color {
     const int AMARILLO_ROTO  = 220;
     const int ROJO           = 196;
     const int VERDE_MATRIX   = 46;
+
+        // Nuevas variantes de verde
+    const int VERDE_CLARO     = 10;
+    const int VERDE_PASTEL    = 42;
+    const int VERDE_OSCURO    = 22;
+    const int VERDE_OLIVA     = 58;
+
+    const int VERDE_INKSCAPE = 72;
 }
 
 struct TamanoTerminal { int columnas; int filas; };

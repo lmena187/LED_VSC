@@ -2,7 +2,7 @@
 //  main.cpp — Arranque del programa
 //  Compilar: g++ -std=c++11 main.cpp -o led -pthread
 // ============================================================
-
+#include <signal.h>
 #include "red.h"
 #include "splash.h"
 #include <clocale>
@@ -25,9 +25,17 @@ int                 canvasColor[H][W];
 std::vector<EmojiTag> tags;
 std::vector<EmojiTag> tagsDinamicos;
 
+void manejarSalida(int) {
+    // Mover cursor debajo de toda la pantalla splash antes de salir
+    std::cout << "\033[38;1H" << "\033[0m" << std::endl;
+    system("stty echo icanon");
+    exit(0);
+}
 int main() {
     setlocale(LC_ALL, "");
 
+    signal(SIGINT, manejarSalida);   // Ctrl+C
+signal(SIGTERM, manejarSalida);  // kill
     // Limpiar pantalla
     std::cout << "\033[2J\033[H";
     std::cout.flush();
@@ -42,7 +50,7 @@ std::cout.flush();
     //  LOGO (activar cuando chafa este instalado y ruta confirmada)
     // ============================================================
 #if USAR_LOGO == 1
-    system("tput cup 0 4 && chafa -f sixel --size=30x20 '/mnt/c/Users/Usuario/Documents/PlatformIO/Projects/LED_VSC/LOGO/favorita0.png' 2>/dev/null");
+  system("tput cup 0 4 && chafa -f sixel --size=30x20 '/mnt/c/Users/Usuario/Documents/PlatformIO/Projects/LED_VSC/LOGO/favorita0.png' 2>/dev/null");
 #endif
 
     // Cursor a posicion segura — siempre necesario

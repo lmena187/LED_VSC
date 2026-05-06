@@ -1,3 +1,3 @@
-veces_encendido=205
-segundos_encendido=1031
-ultimo_evento=APAGADO 20:59:56
+veces_encendido=8
+segundos_encendido=40
+ultimo_evento=APAGADO 18:39:39

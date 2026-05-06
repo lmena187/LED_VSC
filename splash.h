@@ -18,18 +18,15 @@
 static const char*  SPLASH_CLAVE        = "1234";
 static const int    SPLASH_COLOR        = Color::VERDE_MATRIX;
 static const int    SPLASH_MARGEN       = 12;    // columnas desde la izquierda
-static const int    SPLASH_FILA         = 0;    // fila donde empieza el logo
-static const int    SPLASH_MAX_INTENTOS = 3;    // intentos antes de bloquear
-static const int    SPLASH_ANCHO_TERM   = 125;  // ancho de la terminal
+static const int    SPLASH_FILA         = 0;     // fila donde empieza el logo
+static const int    SPLASH_MAX_INTENTOS = 3;     // intentos antes de bloquear
+static const int    SPLASH_ANCHO_TERM   = 125;   // ancho de la terminal
+static const int    SPLASH_ANCHO_CAMPO  = 20;    // ancho del campo de clave
 
 // ── LOGO BRAILLE (logo + texto FAVORITA) ─────────────────
-static const int SPLASH_FILAS = 36;
+static const int SPLASH_FILAS = 26;
 
 static const char* SPLASH_LOGO[] = {
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣤⣤⣶⣾⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
@@ -56,12 +53,6 @@ static const char* SPLASH_LOGO[] = {
     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
 };
 
 // ── FUNCIONES ────────────────────────────────────────────
@@ -76,7 +67,8 @@ inline void splashMostrarLogo() {
     std::cout.flush();
 }
 
-inline std::string splashLeerClave(int) {
+// Leer clave manteniendo el fondo verde del campo
+inline std::string splashLeerClave(int filaClave, int colCampo) {
     struct termios old, nuevo;
     tcgetattr(STDIN_FILENO, &old);
     nuevo = old;
@@ -92,14 +84,21 @@ inline std::string splashLeerClave(int) {
         if (c == 127 || c == '\b') {
             if (!clave.empty()) {
                 clave.pop_back();
-                std::cout << "\b \b";
-                std::cout.flush();
             }
         } else {
-            clave += c;
-            std::cout << ansi(SPLASH_COLOR) << "*" << ansiReset();
-            std::cout.flush();
+            if ((int)clave.length() < SPLASH_ANCHO_CAMPO) {
+                clave += c;
+            }
         }
+        // Redibujar campo completo con fondo verde
+        std::cout << "\033[" << filaClave << ";" << colCampo << "H";
+        std::cout << ansiFondo256(Color::VERDE_CLARO);  //////////////////////////////////////
+        std::string asteriscos((int)clave.length(), '*');
+        std::string espacios(SPLASH_ANCHO_CAMPO - (int)clave.length(), ' ');
+        std::cout << ansi(Color::BLANCO_INTENSO) << asteriscos << espacios << "\033[0m";
+        // Cursor al final de los asteriscos
+        std::cout << "\033[" << filaClave << ";" << (colCampo + (int)clave.length()) << "H";
+        std::cout.flush();
     }
     tcsetattr(STDIN_FILENO, TCSANOW, &old);
     return clave;
@@ -108,39 +107,62 @@ inline std::string splashLeerClave(int) {
 inline bool splashAutenticar() {
     splashMostrarLogo();
 
-    // Calcular posicion centrada del bloque de clave
-    // El bloque tiene: linea decorativa + prompt + mensaje = 3 filas
-    int filaDecorativa = SPLASH_FILA + SPLASH_FILAS;
-    int filaClave      = filaDecorativa + 1;
+    // Calcular filas
+    int filaFranja     = SPLASH_FILA + SPLASH_FILAS;
+    int filaDecorativa = filaFranja + 1;
+    int filaClave      = filaDecorativa + 2;
     int filaMensaje    = filaClave + 1;
+    //int filaTeclas     = filaMensaje + 2;
+    int filaInstruccion = filaMensaje + 1;
+    int filaTeclas      = filaInstruccion + 5;
 
-    // Centrar horizontalmente
-       
+    // Franja descriptiva — fondo verde matrix, texto blanco
+    std::string franja = "   SISTEMA OPERATIVO LINUX   |   Ubuntu 24.04 LTS   ";
+    int colFranja = (SPLASH_ANCHO_TERM - (int)franja.length()) / 2;
+    escribirEnPosicionConFondo(colFranja, filaFranja, franja, Color::BLANCO, Color::VERDE_CLARO, true);/////////
+
+    // Linea decorativa
     std::string decoracion = "──────────────────────────────────────────────────";
-    int longitudReal = 50;  // numero de caracteres ─ que pusiste
-    std::string labelClave = "  Ingrese clave: ";
-    //int colDecoracion = (SPLASH_ANCHO_TERM - (int)decoracion.length()) / 2;
+    int longitudReal = 50;
     int colDecoracion = (SPLASH_ANCHO_TERM - longitudReal) / 2;
-    int colClave      = (SPLASH_ANCHO_TERM - (int)labelClave.length() - 10) / 2;
-
-    // Dibujar linea decorativa
     escribirEnPosicion(colDecoracion, filaDecorativa, decoracion, SPLASH_COLOR);
+
+    // Teclas de funcion — solo texto, estilo wireframe
+    std::string teclas = "  F1        F2        F3        F4        F5        F6  ";
+    int colTeclas = (SPLASH_ANCHO_TERM - (int)teclas.length()) / 2;
+    // Instruccion al usuario
+std::string instruccion = "Digite ENTER luego de ingresar su codigo";
+int colInstruccion = (SPLASH_ANCHO_TERM - (int)instruccion.length()) / 2;
+escribirEnPosicion(colInstruccion, filaInstruccion, instruccion, SPLASH_COLOR);
+    escribirEnPosicion(colTeclas, filaTeclas, teclas, SPLASH_COLOR);
     std::cout.flush();
+
+    // Label y campo de clave
+    std::string labelClave = "  Codigo de Operador: ";
+    int colClave = (SPLASH_ANCHO_TERM - (int)labelClave.length() - SPLASH_ANCHO_CAMPO) / 2;
+    int colCampo = colClave + (int)labelClave.length();
 
     int intentos = 0;
     while (intentos < SPLASH_MAX_INTENTOS) {
         limpiarPosicion(1, filaClave,   120);
         limpiarPosicion(1, filaMensaje, 120);
 
-        // Prompt centrado
+        // Label
         escribirEnPosicion(colClave, filaClave, labelClave, SPLASH_COLOR);
-        std::cout << "\033[" << filaClave << ";" << (colClave + (int)labelClave.length()) << "H";
+
+        // Campo con fondo verde inicial
+        std::cout << "\033[" << filaClave << ";" << colCampo << "H";
+        std::cout << ansiFondo256(Color::VERDE_CLARO); //////////////////////////////////
+        std::string campoVacio(SPLASH_ANCHO_CAMPO, ' ');
+        std::cout << ansi(Color::BLANCO_INTENSO) << campoVacio << "\033[0m";
+
+        // Cursor al inicio del campo
+        std::cout << "\033[" << filaClave << ";" << colCampo << "H";
         std::cout.flush();
 
-        std::string clave = splashLeerClave(filaClave);
+        std::string clave = splashLeerClave(filaClave, colCampo);
 
         if (clave == SPLASH_CLAVE) {
-            // Mensaje de exito centrado
             std::string msgOk = "✓  Acceso concedido";
             int colOk = (SPLASH_ANCHO_TERM - (int)msgOk.length()) / 2;
             escribirEnPosicion(colOk, filaMensaje, msgOk, SPLASH_COLOR, true);
