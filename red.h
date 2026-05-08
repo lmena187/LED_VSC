@@ -32,6 +32,7 @@ inline void mostrarMensajeTemporal(int filaMsg, const std::string& mensaje) {
         int filaPrompt = filaMsg - 1;
         limpiarPosicion(2, filaPrompt, 50);
         escribirEnPosicion(2, filaPrompt, "  > [ ]                    ", Color::VERDE_MATRIX);
+        std::cout << "\033[" << filaPrompt << ";8H";  // <-- cursor dentro de > [ ]
         std::cout.flush();
     }).detach();
 }

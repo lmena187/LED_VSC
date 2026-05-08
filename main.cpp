@@ -9,15 +9,14 @@
 #include <thread>
 #include <unistd.h>
 
-// Logo: desactivado hasta tener chafa instalado y ruta confirmada
-// Para activar: descomentar el system() y cambiar USAR_LOGO a 1
+
 #define USAR_LOGO 0
 
 Config        cfg;
 Estado        estado;
 Pincel        pincel;
 Estadisticas  stats;
-bool          modoManualActivo = false;
+bool          modoManualActivo = true;
 
 std::array<char, 4> canvas[H][W];
 int                 canvasColor[H][W];
@@ -25,37 +24,38 @@ int                 canvasColor[H][W];
 std::vector<EmojiTag> tags;
 std::vector<EmojiTag> tagsDinamicos;
 
+
 void manejarSalida(int) {
-    // Mover cursor debajo de toda la pantalla splash antes de salir
-    std::cout << "\033[38;1H" << "\033[0m" << std::endl;
-    system("stty echo icanon");
-    exit(0);
+    system("stty sane");
+    std::cout << "\033[38;1H\n";
+    std::cout << "\033[?25h";
+    std::cout.flush();
+    _exit(0);  // termina inmediatamente
 }
+
+
+
 int main() {
     setlocale(LC_ALL, "");
 
-    signal(SIGINT, manejarSalida);   // Ctrl+C
-signal(SIGTERM, manejarSalida);  // kill
-    // Limpiar pantalla
+    signal(SIGINT,  manejarSalida);
+    signal(SIGTERM, manejarSalida);
+
     std::cout << "\033[2J\033[H";
     std::cout.flush();
 
-    // Ocultar lo que escribe el usuario y enviar cada tecla inmediatamente
     system("stty -echo -icanon min 1");
-        if (!splashAutenticar()) return 0;
-std::cout << "\033[2J\033[H";  // limpiar pantalla antes de arrancar
-std::cout.flush();
 
-    // ============================================================
-    //  LOGO (activar cuando chafa este instalado y ruta confirmada)
-    // ============================================================
-#if USAR_LOGO == 1
-  system("tput cup 0 4 && chafa -f sixel --size=30x20 '/mnt/c/Users/Usuario/Documents/PlatformIO/Projects/LED_VSC/LOGO/favorita0.png' 2>/dev/null");
-#endif
+    if (!splashAutenticar()) return 0;
 
-    // Cursor a posicion segura — siempre necesario
-    std::cout << "\033[0;0H";
+    std::cout << "\033[2J\033[H";
     std::cout.flush();
+
+    construirYDibujar();  // canvas aparece inmediatamente
+
+#if USAR_LOGO == 1
+    system("tput cup 0 4 && chafa -f sixel --size=30x20 '/mnt/c/Users/Usuario/Documents/PlatformIO/Projects/LED_VSC/LOGO/favorita0.png' 2>/dev/null");
+#endif
 
     // Hilo TCP
     std::string winIP = obtenerIPPuente();
@@ -66,8 +66,7 @@ std::cout.flush();
     std::thread teclado(hiloTeclado);
     teclado.detach();
 
-    std::cout << "\033[" << (3 + H + 1) << ";1H";
-    std::cout << "\033[?25h";
+    std::cout << "\033[?25h";  // mostrar cursor
     std::cout.flush();
 
     while (true) { sleep(1); }

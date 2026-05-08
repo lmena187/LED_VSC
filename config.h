@@ -9,8 +9,12 @@
 #include <string>
 #include <array>
 
+// ============================================================
+//  Tamaño del camvas principal
+// ============================================================
+
 const int W = 80; // 80 el mismo valor que trabajo en inkscape
-const int H = 26;
+const int H = 30;
 
 namespace Color {
     const int RESET          = 0;
@@ -30,7 +34,8 @@ namespace Color {
     const int VERDE_OSCURO    = 22;
     const int VERDE_OLIVA     = 58;
 
-    const int VERDE_INKSCAPE = 72;
+    const int VERDE_INKSCAPE = 72; // color creado usando inkscape, 
+                                    // le paso el RGB y luego deepseek me da el codigo listo
 }
 
 struct TamanoTerminal { int columnas; int filas; };
@@ -75,7 +80,7 @@ struct Config {
     //   filaInicio + H + filaStats + 2 → ! TECLA NO VALIDA
     // Aumenta filaStats para bajar el bloque
     // Reduce  filaStats para subir el bloque
-    int  filaStats         = 4;  // desplazamiento del bloque de estadisticas
+    int  filaStats         = 1;  // desplazamiento del bloque de estadisticas
 };
 
 struct Estado {

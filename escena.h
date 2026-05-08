@@ -16,169 +16,22 @@
 inline void construirFiguras() {
     std::vector<Figura> figuras;
 
-// ============================================================
-//  CUADRADO CON LADOS INDEPENDIENTES/SEPARADOS Y ESQUINAS
-//  Estilo wireframe técnico con caracteres de esquina
-// Las esquinas se dibujan por separado "└"
-// ============================================================
 
 // ============================================================
 //  VEREDA (2 lados independientes)
 // ============================================================
 
-// Vereda frente (horizontal)
-Figura veredaFrente;
-veredaFrente.path   = "M 12,46 H 74";
-veredaFrente.color  = Color::VERDE_MATRIX;
-veredaFrente.trazo  = "▀";
-veredaFrente.grosor = 1;
-veredaFrente.ladoIndependiente = true;
-figuras.push_back(veredaFrente);
-
-// Vereda lateral (vertical)
-Figura veredaLateral;
-veredaLateral.path   = "M 12,0 V 44";
-veredaLateral.color  = Color::VERDE_MATRIX;
-veredaLateral.trazo  = "█";
-veredaLateral.grosor = 1;
-veredaLateral.ladoIndependiente = true;
-figuras.push_back(veredaLateral);
-
 // ============================================================
-//  CERRAMIENTO DE LA CASA (4 lados independientes)
+//  RECTÁNGULO ANCHO (desplazado -20 en X)
 // ============================================================
 
-// Lado trasero (horizontal)
-Figura cerramientoTrasero;
-cerramientoTrasero.path   = "M 20,0 H 69";
-cerramientoTrasero.color  = Color::VERDE_MATRIX;
-cerramientoTrasero.trazo  = "─";
-cerramientoTrasero.grosor = 1;
-cerramientoTrasero.ladoIndependiente = true;
-figuras.push_back(cerramientoTrasero);
-
-// Lado frontal (horizontal)
-Figura cerramientoFrontal;
-cerramientoFrontal.path   = "M 60,39 H 21";
-cerramientoFrontal.color  = Color::VERDE_MATRIX;
-cerramientoFrontal.trazo  = "─";
-cerramientoFrontal.grosor = 1;
-cerramientoFrontal.ladoIndependiente = true;
-figuras.push_back(cerramientoFrontal);
-
-// Lado derecho (vertical)
-Figura cerramientoDerecho;
-cerramientoDerecho.path   = "M 70,1 V 38";
-cerramientoDerecho.color  = Color::VERDE_MATRIX;
-cerramientoDerecho.trazo  = "│";
-cerramientoDerecho.grosor = 1;
-cerramientoDerecho.ladoIndependiente = true;
-figuras.push_back(cerramientoDerecho);
-
-// Lado izquierdo (vertical)
-Figura cerramientoIzquierdo;
-cerramientoIzquierdo.path   = "M 20,38 V 1";
-cerramientoIzquierdo.color  = Color::VERDE_MATRIX;
-cerramientoIzquierdo.trazo  = "│";
-cerramientoIzquierdo.grosor = 1;
-cerramientoIzquierdo.ladoIndependiente = true;
-figuras.push_back(cerramientoIzquierdo);
-// ============================================================
-//  DORMITORIO (5 lados independientes)
-// ============================================================
-
-// Lado trasero (horizontal)
-Figura dormitorioTrasero;
-dormitorioTrasero.path   = R"(M 28,0
-                               H 44)";
-dormitorioTrasero.color  = Color::VERDE_MATRIX;
-dormitorioTrasero.trazo  = "─";
-dormitorioTrasero.grosor = 1;
-dormitorioTrasero.ladoIndependiente = true;
-figuras.push_back(dormitorioTrasero);
-
-// Lado frontal izquierdo (horizontal, relativo)
-Figura dormitorioFrontalIzquierdo;
-dormitorioFrontalIzquierdo.path   = R"(m 32,12
-                                        h -3)";
-dormitorioFrontalIzquierdo.color  = Color::VERDE_MATRIX;
-dormitorioFrontalIzquierdo.trazo  = "─";
-dormitorioFrontalIzquierdo.grosor = 1;
-dormitorioFrontalIzquierdo.ladoIndependiente = true;
-figuras.push_back(dormitorioFrontalIzquierdo);
-
-// Lado frontal derecho (horizontal)
-Figura dormitorioFrontalDerecho;
-dormitorioFrontalDerecho.path   = R"(M 37,12
-                                      H 42)";
-dormitorioFrontalDerecho.color  = Color::VERDE_MATRIX;
-dormitorioFrontalDerecho.trazo  = "─";
-dormitorioFrontalDerecho.grosor = 1;
-dormitorioFrontalDerecho.ladoIndependiente = true;
-figuras.push_back(dormitorioFrontalDerecho);
-
-// Lado derecho (vertical)
-Figura dormitorioDerecho;
-dormitorioDerecho.path   = R"(M 42,1
-                               V 10)";
-dormitorioDerecho.color  = Color::VERDE_MATRIX;
-dormitorioDerecho.trazo  = "│";
-dormitorioDerecho.grosor = 1;
-dormitorioDerecho.ladoIndependiente = true;
-figuras.push_back(dormitorioDerecho);
-
-// Lado izquierdo (vertical)
-Figura dormitorioIzquierdo;
-dormitorioIzquierdo.path   = R"(M 28,10
-                                 V 1)";
-dormitorioIzquierdo.color  = Color::VERDE_MATRIX;
-dormitorioIzquierdo.trazo  = "│";
-dormitorioIzquierdo.grosor = 1;
-dormitorioIzquierdo.ladoIndependiente = true;
-figuras.push_back(dormitorioIzquierdo);
-
-// ============================================================
-//  PORTON / PUERTA DE GARAJE (4 lados independientes)
-// ============================================================
-
-pincel.color = Color::ROJO;
-setPixel(70, 19, "┐");  // superior derecha
-
-// Lado superior
-Figura portonSuperior;
-portonSuperior.path   = "M 61,38 H 69";
-portonSuperior.color  = Color::VERDE_MATRIX;
-portonSuperior.trazo  = "─";
-portonSuperior.grosor = 1;
-portonSuperior.ladoIndependiente = true;
-figuras.push_back(portonSuperior);
-
-// Lado inferior
-Figura portonInferior;
-portonInferior.path   = "M 69,42 H 61";
-portonInferior.color  = Color::VERDE_MATRIX;
-portonInferior.trazo  = "─";
-portonInferior.grosor = 1;
-portonInferior.ladoIndependiente = true;
-figuras.push_back(portonInferior);
-
-// Lado izquierdo
-Figura portonIzquierdo;
-portonIzquierdo.path   = "M 60,40 V 40";
-portonIzquierdo.color  = Color::VERDE_MATRIX;
-portonIzquierdo.trazo  = "│";
-portonIzquierdo.grosor = 1;
-portonIzquierdo.ladoIndependiente = true;
-figuras.push_back(portonIzquierdo);
-
-// Lado derecho
-Figura portonDerecho;
-portonDerecho.path   = "m 70,40 v 0";
-portonDerecho.color  = Color::VERDE_MATRIX;
-portonDerecho.trazo  = "│";
-portonDerecho.grosor = 1;
-portonDerecho.ladoIndependiente = true;
-figuras.push_back(portonDerecho);
+Figura rectanguloAncho;
+rectanguloAncho.path   = "M 0,0 H 79.000001 V 54.000002 H 0 Z";
+rectanguloAncho.color  = Color::VERDE_MATRIX;
+rectanguloAncho.trazo  = "█";
+rectanguloAncho.grosor = 1;
+rectanguloAncho.ladoIndependiente = false;
+figuras.push_back(rectanguloAncho);
 
 
 
@@ -253,181 +106,51 @@ inline void construirYDibujar() {
 
     pincel.color = Color::VERDE_MATRIX;
     
-    escribirTexto(33,         25, "CALLE SARAJEVO", Color::VERDE_MATRIX);
-     setPixel(12, 25, "━");
-      setPixel(13, 25, "━");
-      setPixel(16, 25, "━");
-      setPixel(17, 25, "━");
-      setPixel(20, 25, "━");
-      setPixel(21, 25, "━");
-        setPixel(24, 25, "━");
-      setPixel(25, 25, "━");
-      setPixel(28, 25, "━");
-      setPixel(29, 25, "━");
-
-      setPixel(50, 25, "━");
-      setPixel(51, 25, "━");
-         setPixel(54, 25, "━");
-      setPixel(55, 25, "━");
-         setPixel(58, 25, "━");
-      setPixel(59, 25, "━");
-        setPixel(62, 25, "━");
-      setPixel(63, 25, "━");
-        setPixel(66, 25, "━");
-      setPixel(67, 25, "━");
-        setPixel(70, 25, "━");
-      setPixel(71, 25, "━");
-      
-
-    escribirTextoVertical(4, 6, "CALLE DAMASCO", Color::VERDE_MATRIX);
-    setPixel(4, 0, "┃");
-    setPixel(4, 2, "┃");
-    setPixel(4, 4, "┃");
-    setPixel(4, 20, "┃");
-    setPixel(4, 22, "┃");
-    setPixel(4, 24, "┃");
-
-
-    // ============================================================
-//  PLANTA DEL EXTERIOR DE LA CASA
-// ============================================================
-
-tags.push_back({37, 18, "🌿", Color::VERDE_MATRIX});
-
-    // ============================================================
-    //  ESQUINAS DEL CERRAMIENTO
-    // ============================================================
-    pincel.color = Color::VERDE_MATRIX;
-    setPixel(20, 0, "┌");   // superior izquierda
-    setPixel(70, 0, "┐");   // superior derecha
-    //setPixel(70, 20, "┘");    // inferior derecha
-    setPixel(20, 20, "└");    // inferior izquierda
-
-    // ============================================================
-//  ESQUINAS DEL DORMITORIO
-// ============================================================
-pincel.color = Color::VERDE_MATRIX;
-setPixel(28, 0, "┌");   // superior izquierda
-setPixel(42, 0, "┐");   // superior derecha
-setPixel(42, 6, "┘");  // inferior derecha
-setPixel(28, 6, "└");  // inferior izquierda
-
-// ============================================================
-//  ESQUINAS DEL PORTON
-// ============================================================
-pincel.color = Color::VERDE_MATRIX;
-setPixel(60, 19, "┌");  // superior izquierda
-//setPixel(70, 19, "┐");  // superior derecha
-setPixel(60, 21, "└");  // inferior izquierda
-setPixel(70, 21, "┘");  // inferior derecha
-
+    escribirTexto(33,         29, "AV ESMERALDAS", Color::VERDE_MATRIX);
+ 
     actualizarTagsDinamicos();
     imprimirCanvas();
     dibujarTags(tags);
     dibujarTags(tagsDinamicos);
    
    
-   
-    //escribirEnPosicion(50, 2, "S͉̟͇̘̠̟̘̓̔̈́͐͗̒̌̌͐̚ͅI͖̳̥̗̱̩͚̦͔̭͆͌̐̍̉͗͐̏̌S̰̫̖͇̙̓̍́̔̀̃͊̏̇̆Ṭ̲̩͉͙̦͋̍́̑͑͋͂̌̍͛̐ͅE͙̭̘̲̲̠͚̙͓̋̀̌̀͛̎̆̇͐͗ͅͅM̘̗̪̟͔͕͆͗͑̚ͅÅ̗̰̖̯̮̣͖͔̥͍͙̟̉̊̽ D̟̤͔̜̪͖͍̞̜͉͎̙̔̂̿̚É̯̜͇̬͔̜̱̫̲͈͐̇̑̈ L̞̠̲͍̝̱̞̞̘̣͛̊̄͌͆͛̎̾́̐̆̅U͍̥͇͕͎̙͈͊̽̀̏̒C̩̣̭͉͚̩͕͖͐̅̓͐̐͐̚È͚͉̲̫̫͇̰̽̐̇͗̚S̲͓͖͇̬̫̬͍̦͉̮̱͑̆̀̉̐̈́ A̰̤̲̱̓͋̈̎̓̾͒̓̃͐͊̉Ü̮̞̘͈͗̈͂̿̓̓̀͋͒T͉͚̣̞̪̪̰͔͉̃̊͑́̄́̄͒̾͂O̲̯͚͇̙̤͉̥̣̳̲̎̏̄̿̾̀̚ͅM̜̦̟͕̟͍̳̓̓͂̽̐̊̈́͂̎Ạ̦̫̣̗̮̯͔̖̩͛̐̊̎̌̈͗̈͑̚T̰̬̙̘̀̒̓͂̋̓̔̒̈I̙̙̮̭͍̘̮̫͖̜̱̍̿̆̊̓̄͐C̬̗̱͔̜̙̣̿͋͐̅̈͂̎̆ͅͅA̟̟͖̱̤͇͇̒̈́̋͑͆S̞͔̟͈͓̎͂̔̈", Color::VERDE_MATRIX, true);
-   
-   
-       // ============================================================
+    // ============================================================
     //  CABECERA PRINCIPAL
     // ============================================================
     
-    escribirEnPosicion(50, 1, "ILUMINACION INTELIGENTE CON ESP32", Color::VERDE_MATRIX, true);
-    escribirEnPosicion(50, 2, "══════════════════════════════════", Color::VERDE_MATRIX, false);
-    //escribirEnPosicion(50, 3, "        Casa De Luis Mena         ", Color::VERDE_MATRIX, true);
+    escribirEnPosicion(45, 1, "       AKI 812 LA CONCORDIA       ", Color::VERDE_MATRIX, true);
+    escribirEnPosicion(45, 2, "══════════════════════════════════", Color::VERDE_MATRIX, false);
    
-       
+    
+// ============================================================
+//  DIBUJO DE BRAILLE POR CONJUNTO VERTICAL (varios caracteres a la vez)
+//  Se encienden todos los puntos de una región rectangular
+//  y luego se vuelca el canvas a la terminal.
+// ============================================================
+
+// Primero: limpio el canvas virtual para empezar desde cero
 limpiarBraille();
 
+// Segundo: enciendo TODOS los píxeles de una región de 2 columnas × 12 filas de píxeles.
+//         12 píxeles de alto = 12 / 4 = 3 caracteres Braille verticales.
+for (int y = 0; y < 12; y++) {
+    for (int x = 0; x < BRAILLE_PIXEL_W; x++) {
+        setPixelBraille(x, y);   // enciendo el punto (x, y)
+    }
+}
+
+// Tercero: muestro el canvas completo en la terminal,
+//          en la fila 4, columna 39, con color verde matrix.
+imprimirBraille(7, 39, Color::VERDE_MATRIX);
+
        // ============================================================
-       //  EJEMPLO: CANVAS BRAILLE LLENO (columna vertical)
-       //  Resultado: 1 carácter de ancho × 17 caracteres de alto
-       //  Todos los caracteres serán ⠿ (Braille lleno)
+       //   DIBUJAR BRAILLE INDIVIDUAL.
        // ============================================================
-       
-       limpiarBraille();
-       
-       // Recorrer todos los píxeles (2 de ancho × 68 de alto)
-       for (int y = 0; y < BRAILLE_PIXEL_H; y++) {
-           for (int x = 0; x < BRAILLE_PIXEL_W; x++) {
-               setPixelBraille(x, y);
-           }
-       }
-       
-       // Mostrar el canvas en la posición (fila 1, columna 1)
-       imprimirBraille(4, 39, Color::VERDE_MATRIX);
-
-
-    // ============================================================
-    //  LADRILLOS AMARILLOS DE VEREDA PEATONAL ( Usando caracteres Braille individuales para mayor detalle y estilo visual )
-    // ============================================================
+  
+     bool ladrilloAmarillo1[8] = {1,1,1,1,1,1,1,1}; // /Aui defino el patrón ⠿
+     dibujarCaracterBraille(21, 36, ladrilloAmarillo1, Color::VERDE_MATRIX); // Aqui dibujo el patron previamente establecdio
     
-       //
-
-    bool ladrilloAmarillo1[8] = {1,1,1,1,1,1,1,1}; // ⠿
-    bool ladrilloAmarillo2[8] = {1,1,1,1,1,1,1,1}; // ⠿
-    bool ladrilloAmarillo3[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo4[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo5[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo6[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo7[8] = {1,1,1,1,1,1,1,1};  // ⠿
-
-    bool ladrilloAmarillo8[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo9[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo10[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo11[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo12[8] = {1,1,1,1,1,1,1,1};  // ⠿
-
-    bool ladrilloAmarillo13[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo14[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo15[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo16[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo17[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo18[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo19[8] = {1,1,1,1,1,1,1,1};  // ⠿       
-    bool ladrilloAmarillo20[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo21[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    bool ladrilloAmarillo22[8] = {1,1,1,1,1,1,1,1};  // ⠿
-    
-    
-    
-
-    dibujarCaracterBraille(21, 36, ladrilloAmarillo1, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(21, 37, ladrilloAmarillo2, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(21, 38, ladrilloAmarillo3, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(21, 39, ladrilloAmarillo4, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(21, 40, ladrilloAmarillo5, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(21, 41, ladrilloAmarillo6, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(21, 42, ladrilloAmarillo7, Color::VERDE_MATRIX);
-
-    dibujarCaracterBraille(22, 36, ladrilloAmarillo8, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(23, 36, ladrilloAmarillo9, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(24, 36, ladrilloAmarillo10, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(25, 36, ladrilloAmarillo11, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(26, 36, ladrilloAmarillo12, Color::VERDE_MATRIX);
-
-    dibujarCaracterBraille(26, 37, ladrilloAmarillo13, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(26, 38, ladrilloAmarillo14, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(26, 39, ladrilloAmarillo15, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(26, 40, ladrilloAmarillo16, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(26, 41, ladrilloAmarillo17, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(26, 42, ladrilloAmarillo18, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(26, 43, ladrilloAmarillo19, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(26, 44, ladrilloAmarillo20, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(26, 45, ladrilloAmarillo21, Color::VERDE_MATRIX);
-    dibujarCaracterBraille(26, 46, ladrilloAmarillo22, Color::VERDE_MATRIX);
-
-
-
- 
-
-   
-
-
-
+     
 mostrarEstadisticasYPrompt();
  
 }
